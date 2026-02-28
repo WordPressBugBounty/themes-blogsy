@@ -1,0 +1,61 @@
+﻿= 1.0.9 - 5 February 2026 =
+* Fixed: WP-6.9.1 notice when enqueue 'blogsy-woocommerce' style.
+* Fixed: CSS & JS issue fixed and some other improvments.
+* Improved: Single post meta display for updated date with translation support.
+
+= 1.0.8 - 24 January 2026  =
+* Fixed: Dark mode and  style issue.
+* Updated: Refactor code structure for improved readability and maintainability.
+* Updated: Refactor typography styles for menu links
+* Updated: The CSS selectors for menu typography in both the customize preview and dynamic styles.
+* Removed: The reference to the vertical navigation links to streamline the styling for the main header navigation links only.
+* Fixed: Update topbar time display to refresh every second.
+* Enhanced: Show smooth closing animation of search popup.
+
+= 1.0.7 - 19 January 2026  =
+* Fixed: Fatal error on wp theme preview.
+
+= 1.0.6 - 19 January 2026  =
+* Fixed: Fatal error on wp theme preview.
+* Fixed: theme tag.
+* Fixed: Some minor isses.
+
+= 1.0.5 - 08 January 2026  =
+* Fixed: Header search popup shrink issue.
+* Improved: Pattern post meta category style.
+* Updated: The JavaScript to bind typography settings for custom section headings and footer/sidebar widget titles.
+* Added: Default typography options for footer/sidebar widget titles in the Customizer.
+* Modified: The Customizer settings to include a new label for custom section headings and added display options.
+* Adjusted: Dynamic styles to accommodate new typography settings for section and widget titles.
+* Updated: Refactored HTML structure in various template parts to use the new section heading class.
+* Updated: Corrected button text class in stories template for consistency.
+* Updated: RTL styles to reflect changes in class names.
+* Updated: Screenshot to reflect the latest design changes.
+
+= 1.0.4 - 31 December 2025  =
+* Fixed: Adjusted logo max height and height CSS rules to apply to both the main and sticky headers.
+* Updated: Changed default value for 'blogsy_featured_category_style' from 'one' to 'three'.
+* Updated: Removed the option for '1/6' from the featured category settings.
+* Updated: Column class logic in featured category template to accommodate the new default style.
+* Updated: Enhanced top bar and header display logic with new meta keys.
+* Updated: Refactored header display logic and improved customizer options.
+* Added: New CSS rules for customizer preview to hide additional shortcuts.
+
+= 1.0.3 - 20 December 2025  =
+* New: Added a new feature to the ticker template to include a play/pause button, enhancing user interaction with the ticker.
+* Updated: The settings labels for clarity, changing "Enable Ticker News Section" to "Enable Ticker Section".
+* Improved: Enhanced dynamic styles to conditionally apply background colors for card and sidebar widgets based on user settings.
+* Updated: Language files to reflect changes in settings and options.
+* Fixed: Card background control sanitization issue.
+* Updated: Minimum WP required version to 6.6.
+
+= 1.0.2 - 15 December 2025  =
+* Fixed: Missing text domain on string in Info Items pattern.
+* Fixed: Escape issue in search widget.
+
+= 1.0.1 - 15 December 2025  =
+* Improved: Performance improvements.
+* Changed: Minor UI adjustments.
+
+= 1.0.0 - 14 December 2025  =
+* Initial release 🚀
