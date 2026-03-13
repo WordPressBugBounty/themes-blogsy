@@ -2574,11 +2574,11 @@ body .card-layout-w .alignwide .alignfull {
 
 .single-content-inner>.single-page-title.screen-reader-text+[class*="wp-block"],
 .single-content-inner>[class*="wp-block"]:first-child {
-    margin-top: -4rem;
+    margin-top: -1rem;
 }
 
 .single-content-inner>[class*="wp-block"]:last-child {
-    margin-bottom: -4rem;
+    margin-bottom: -1rem;
 }
 
 .sidebar-container .sidebar-container-inner>*+* {
@@ -2795,7 +2795,7 @@ html :where(.wp-block-search__button-inside .wp-block-search__inside-wrapper) .w
 }
 
 .single-page-title {
-    margin: -20px 0 35px;
+    margin: -15px 0 35px;
     border-bottom: 1px solid var(--pt-border-color);
     padding: 0 0 1.5rem;
     word-wrap: break-word;

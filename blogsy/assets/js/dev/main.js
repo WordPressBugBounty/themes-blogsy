@@ -199,7 +199,7 @@
 
 	// Time update display
 	const $timeElem = $('#blogsy-time');
-	if ($timeElem.length){
+	if ($timeElem.length) {
 		$timeElem.text(
 			setInterval(() => {
 				$timeElem.text(new Date().toLocaleTimeString());
@@ -604,7 +604,7 @@
 	$('.blogsy-news-ticker-content-wrapper').each(function () {
 		const $wrapper = $(this);
 		const $content = $wrapper.find('.blogsy-news-ticker-content');
-		const $itemsContainer = $wrapper.find('.blogsy-news-ticker-items');
+		const $itemsContainer = $wrapper.find('.blogsy-news-ticker-items:not(.swiper-wrapper)');
 		const $button = $wrapper.next('.blogsy-news-ticker-btn');
 
 		// State management per ticker

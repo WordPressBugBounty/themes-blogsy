@@ -16,7 +16,7 @@ $categories                 = get_categories(
 $stories_args['categories'] = $categories;
 
 ?>
-<div id="blogsy-stories">
+<div id="blogsy-stories" class="pt-mb-3 pt-pb-3">
 	<?php get_template_part( 'template-parts/stories/stories', 'one', $stories_args ); ?>
 </div>
 <?php

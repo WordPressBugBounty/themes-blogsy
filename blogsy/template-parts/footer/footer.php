@@ -16,8 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<?php // Hook for actions before footer.
-do_action( 'blogsy_before_footer', 'before_footer' ); ?>
+<?php
+// Hook for actions before footer.
+do_action( 'blogsy_before_footer', 'before_footer' );
+?>
 <footer id="site-footer" class="<?php echo apply_filters( 'blogsy_footer_classes', 'blogsy-site-footer' ); ?>">
 	<?php
 	// Singular Custom Footer.

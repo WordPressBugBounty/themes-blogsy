@@ -40,6 +40,15 @@ html[scheme="dark"] .blogsy-hero-animated-bg {
             #e74d71);
 }
 
+/* Pattern preview styles at wp.org
+-------------------------------------------------------------- */
+.page-content-wrapper:has(#wporg-pattern-preview) {
+    --sidebar-width: 0;
+}
+.page-content-wrapper:has(#wporg-pattern-preview) .sidebar-container {
+    display:none;
+}
+
 /* Flex utilities
 -------------------------------------------------------------- */
 .is-style-drop-shadow-hover {

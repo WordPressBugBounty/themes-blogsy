@@ -1,4 +1,9 @@
-﻿= 1.0.9 - 5 February 2026 =
+﻿= 1.0.10 - 13 March 2026 =
+* Fixed: Add margin/padding classes to the blogsy stories container for improved spacing.
+* Improved: News ticker JS functionality.
+* Fixed: Patterns preview issue at wp.org.
+
+= 1.0.9 - 5 February 2026 =
 * Fixed: WP-6.9.1 notice when enqueue 'blogsy-woocommerce' style.
 * Fixed: CSS & JS issue fixed and some other improvments.
 * Improved: Single post meta display for updated date with translation support.
