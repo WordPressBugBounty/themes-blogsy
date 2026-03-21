@@ -8381,9 +8381,19 @@ img.blogsy-logo-image.dark-logo {
     fill: transparent;
     stroke: var(--th-active-color);
     stroke-width: 6px;
+    transform-origin: center;
+}
+
+.peony-slider .thumb-style-3 .image-wrapper circle,
+.peony-slider .thumb-style-4 .image-wrapper circle {
     stroke-dasharray: 110;
     stroke-dashoffset: 110;
-    transform-origin: center;
+}
+
+.peony-slider .thumb-style-3 .image-wrapper rect,
+.peony-slider .thumb-style-4 .image-wrapper rect {
+    stroke-dasharray: 288;
+    stroke-dashoffset: 288;
 }
 
 .peony-slider .thumb-style-4 .image-wrapper rect,
