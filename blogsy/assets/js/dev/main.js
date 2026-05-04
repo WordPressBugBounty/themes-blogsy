@@ -692,27 +692,31 @@
 		const $sliderWrapper = el.find('.blogsy-posts-carousel-wrapper');
 		if (!$sliderWrapper.length) return;
 
-		const sliderSettings = $sliderWrapper.data('settings');
-		const sliderSelector = '#' + $sliderWrapper.attr('id') + ' .main-slider';
+		$sliderWrapper.each(function () {
+			const $currentWrapper = $(this);
+			const sliderSettings = $currentWrapper.data('settings');
 
-		const $thumbsWrapper = el.find('.thumbs-slider-wrapper');
+			const $swiperEl = $currentWrapper.find('.swiper').first();
+			if (!$swiperEl.length) return;
 
-		let mainSwiper;
-		let thumbsSwiper;
-		// If thumbs wrapper exists, initialize thumbs and link controllers
-		if ($thumbsWrapper.length) {
-			const thumbsSettings = $thumbsWrapper.data('settings');
-			const thumbsSelector = '#' + $thumbsWrapper.attr('id') + ' .thumbs-slider';
+			const $thumbsWrapper = $currentWrapper.siblings('.thumbs-slider-wrapper');
 
-			thumbsSwiper = new Swiper(thumbsSelector, thumbsSettings);
-			mainSwiper = new Swiper(sliderSelector, sliderSettings);
+			let mainSwiper;
+			let thumbsSwiper;
 
-			mainSwiper.controller.control = thumbsSwiper;
-			thumbsSwiper.controller.control = mainSwiper;
-		} else {
-			// Only initialize main slider if thumbs not present
-			mainSwiper = new Swiper(sliderSelector, sliderSettings);
-		}
+			if ($thumbsWrapper.length && $swiperEl.hasClass('main-slider')) {
+				const thumbsSettings = $thumbsWrapper.data('settings');
+				const thumbsSelector = '#' + $thumbsWrapper.attr('id') + ' .thumbs-slider';
+
+				thumbsSwiper = new Swiper(thumbsSelector, thumbsSettings);
+				mainSwiper = new Swiper($swiperEl[0], sliderSettings);
+
+				mainSwiper.controller.control = thumbsSwiper;
+				thumbsSwiper.controller.control = mainSwiper;
+			} else {
+				mainSwiper = new Swiper($swiperEl[0], sliderSettings);
+			}
+		});
 	}
 	blogsyHeroSlider($('#blogsy-hero'));
 

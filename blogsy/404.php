@@ -10,7 +10,7 @@ get_header();
 	<main id="main" class="main-wrapper">
 		<div class="content-wrapper">
 			<?php
-			$template_id = blogsy_get_layout_template_id( '404' );
+			$template_id = blogsy_get_layout_template_id( '404');
 			$template    = blogsy_template_section_render( $template_id );
 
 			if ( $template ) {

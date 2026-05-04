@@ -1,4 +1,14 @@
-﻿= 1.0.11 - 21 March 2026 =
+﻿= 1.0.12 - 04 May 2026 =
+* Improved: Starter content removed.
+* Improved: Stories styles.
+* Updated: Screenshot changed.
+* Updated: The `blogsy_range_field_css` function to support additional parameters for half divide and custom values.
+* Added: New header navigation background color and text color options in the customizer.
+* Improved: Responsive styles for header navigation in different layouts.
+* Improved: Dynamic styles for hero slider height and added support for Nexo card height adjustments.
+* Updated: Icon set with new icons and improved existing ones.
+
+= 1.0.11 - 21 March 2026 =
 * Fixed: Hero slider thumbnail progress-bar issue.
 
 = 1.0.10 - 13 March 2026 =

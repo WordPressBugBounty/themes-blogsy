@@ -330,6 +330,7 @@ if ( ! class_exists( 'Dynamic_Styles' ) ) :
 				$css .= $this->get_range_field_css( '#blogsy-hero .pt-hero-slider .post-wrapper .title', 'font-size', 'hero_slider_title_font_size', true );
 				// Hero height.
 				$css .= $this->get_range_field_css( '#blogsy-hero .pt-hero-slider .post-wrapper', 'height', 'hero_slider_height' );
+				$css .= $this->get_range_field_css( '#blogsy-hero .blogsy-post-nexo-widget:not(.pt-hero-slider) .post-wrapper', 'height', 'hero_slider_height', true, 'px', true, 9.5 );
 			}
 
 			/**
@@ -818,16 +819,27 @@ if ( ! class_exists( 'Dynamic_Styles' ) ) :
 		 * @param  string $setting_id The ID of the customizer setting containing all information about the setting.
 		 * @param  bool   $responsive Has responsive values.
 		 * @param  string $unit Unit.
+		 * @param  bool   $half_divide Half divide.
+		 * @param  float  $half_custom Custom half value.
 		 * @return string  Generated CSS.
 		 */
-		public function get_range_field_css( string $css_selector, string $css_property, string $setting_id, $responsive = true, $unit = 'px' ): string {
+		public function get_range_field_css( string $css_selector, string $css_property, string $setting_id, $responsive = true, $unit = 'px', $half_divide = false, float $half_custom = 0.0 ): string {
 
 			// Get the saved setting.
 			$setting = Helper::get_option( $setting_id );
 
 			// If just a single value option.
 			if ( ! is_array( $setting ) ) {
-				return $css_selector . ' { ' . $css_property . ': ' . $setting . $unit . '; }';
+				$value = floatval( $setting );
+
+				if ( $half_divide ) {
+					$value = $value / 2;
+				}
+				if ( $half_custom ) {
+					$value -= $half_custom;
+				}
+
+				return $css_selector . ' { ' . $css_property . ': ' . $value . $unit . '; }';
 			}
 
 			// Resolve units.
@@ -855,6 +867,17 @@ if ( ! class_exists( 'Dynamic_Styles' ) ) :
 						continue;
 					}
 
+					// Apply half divide if enabled.
+					$value = floatval( $value );
+
+					if ( $half_divide ) {
+						$value = $value / 2;
+					}
+					if ( $half_custom ) {
+						$value -= $half_custom;
+					}
+
+					// Media queries for responsive values.
 					if ( 'desktop' === $key ) {
 						$mq_open  = '';
 						$mq_close = '';
@@ -871,7 +894,7 @@ if ( ! class_exists( 'Dynamic_Styles' ) ) :
 
 					// Add media query prefix.
 					$css_buffer .= $mq_open . $css_selector . '{';
-					$css_buffer .= $css_property . ': ' . floatval( $value ) . $unit . ';';
+					$css_buffer .= $css_property . ': ' . $value . $unit . ';';
 					$css_buffer .= '}' . $mq_close;
 				}
 			}

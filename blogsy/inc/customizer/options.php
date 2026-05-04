@@ -353,7 +353,7 @@ class Options {
 			],
 
 			// Hero.
-			'blogsy_hero_enable'                          => false,
+			'blogsy_hero_enable'                          => true,
 			'blogsy_hero_type'                            => 'one',
 			'blogsy_hero_visibility'                      => 'all',
 			'blogsy_hero_enable_on'                       => [ 'home' ],

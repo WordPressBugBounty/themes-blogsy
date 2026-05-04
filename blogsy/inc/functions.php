@@ -549,13 +549,16 @@ function blogsy_get_hero_data(): ?array {
 		]
 	);
 
-	return [
-		'type'                   => $hero_type ?: 'one',
-		'query_args'             => $query_args,
-		'elements'               => $elements,
-		'slider_settings'        => $slider_settings,
-		'thumbs_slider_settings' => $thumbs_slider_settings,
-	];
+	return apply_filters(
+		'blogsy_hero_data',
+		[
+			'type'                   => $hero_type ?: 'one',
+			'query_args'             => $query_args,
+			'elements'               => $elements,
+			'slider_settings'        => $slider_settings,
+			'thumbs_slider_settings' => $thumbs_slider_settings,
+		]
+	);
 }
 
 

@@ -156,7 +156,7 @@
 	/**
 	 * Range field CSS.
 	 */
-	function blogsy_range_field_css(selector, property, setting, responsive, unit) {
+	function blogsy_range_field_css(selector, property, setting, responsive, unit, half_divide, half_custom) {
 		var css = '',
 			before = '',
 			after = '';
@@ -164,6 +164,13 @@
 		if (responsive && (Array.isArray(setting) || 'object' === typeof setting)) {
 			Object.keys(setting).forEach(function (index, el) {
 				if (setting[index]) {
+					var value = parseFloat(setting[index]);
+					if (half_divide) {
+						value = value / 2;
+					}
+					if (half_custom) {
+						value -= half_custom;
+					}
 					if ('tablet' === index) {
 						before = '@media only screen and (max-width: 1024px) {';
 						after = '}';
@@ -177,7 +184,7 @@
 						return;
 					}
 
-					css += before + selector + '{' + property + ': ' + setting[index] + unit + '; }' + after;
+					css += before + selector + '{' + property + ': ' + value + unit + '; }' + after;
 				}
 			});
 		}
@@ -189,7 +196,16 @@
 				setting = 0;
 			}
 
-			css = selector + '{' + property + ': ' + setting + unit + '; }';
+			var value = parseFloat(setting);
+
+			if (half_divide) {
+				value = value / 2;
+			}
+			if (half_custom) {
+				value -= half_custom;
+			}
+
+			css = selector + '{' + property + ': ' + value + unit + '; }';
 		}
 
 		return css;
@@ -1070,7 +1086,8 @@
 
 			var css_selector = `html:not([scheme="dark"]) .pt-header-layout-1 #site-header .pt-header-inner .pt-header-container::after,
 							 html:not([scheme="dark"]) .pt-header-layout-2 #site-header .pt-header-inner,
-							 html:not([scheme="dark"]) .pt-header-layout-3 #site-header .pt-header-inner > .pt-header-container`;
+							 html:not([scheme="dark"]) .pt-header-layout-3 #site-header .pt-header-inner > .pt-header-container,
+							 html:not([scheme="dark"]) .pt-header-layout-4 #site-header .pt-header-inner`;
 
 			$style_tag = blogsy_get_style_tag('blogsy_header_background');
 			var style_css = blogsy_design_options_css(css_selector, newval, 'background');
@@ -1137,9 +1154,96 @@
 
 			var css_selector = `.pt-header-layout-1 #site-header .pt-header-inner .pt-header-container::after,
 							 .pt-header-layout-2 #site-header .pt-header-inner,
-							 .pt-header-layout-3 #site-header .pt-header-inner > .pt-header-container`;
+							 .pt-header-layout-3 #site-header .pt-header-inner > .pt-header-container,
+							 .pt-header-layout-4 #site-header .pt-header-inner .pt-logo-container .pt-header-container
+							 `;
 
 			$style_tag = blogsy_get_style_tag('blogsy_header_border');
+			var style_css = blogsy_design_options_css(css_selector, newval, 'border');
+
+			$style_tag.html(style_css);
+		});
+	});
+
+
+	//  Header navigation background color
+	api('blogsy_header_navigation_background', function (value) {
+		value.bind(function (newval) {
+			var $header = $('#site-header .pt-nav-container');
+
+			if (!$header.length) {
+				return;
+			}
+
+			var css_selector = `html:not([scheme="dark"]) .pt-header-layout-4 #site-header .pt-header-inner .pt-nav-container`;
+
+			$style_tag = blogsy_get_style_tag('blogsy_header_navigation_background');
+			var style_css = blogsy_design_options_css(css_selector, newval, 'background');
+
+			$style_tag.html(style_css);
+		});
+	});
+
+
+	// Header navigation font color
+	api('blogsy_header_navigation_text_color', function (value) {
+		value.bind(function (newval) {
+			var $header = $('#site-header .pt-nav-container');
+			if (!$header.length) {
+				return;
+			}
+
+			$style_tag = blogsy_get_style_tag('blogsy_header_navigation_text_color');
+			var style_css = '';
+
+			newval['text-color'] = newval['text-color'] ? newval['text-color'] : 'inherit';
+			newval['link-color'] = newval['link-color'] ? newval['link-color'] : 'inherit';
+			newval['link-hover-color'] = newval['link-hover-color'] ? newval['link-hover-color'] : 'inherit';
+			newval['link-active-color'] = newval['link-active-color'] ? newval['link-active-color'] : 'inherit';
+
+			// Text color.
+			style_css += 'html:not([scheme="dark"]) .pt-header .pt-nav-container { color: ' + newval['text-color'] + '; }';
+
+			// Link color.
+			style_css +=
+				'html:not([scheme="dark"]) .pt-header .pt-nav-container .blogsy-header-nav > li > a, ' +
+				'html:not([scheme="dark"]) .pt-header .pt-nav-container .blogsy-header-v-nav > li > a, ' +
+				'html:not([scheme="dark"]) .pt-header .pt-nav-container .pt-header-widget .blogsy-social-icons-widget:not(.minimal-fill, .rounded-fill) > ul > li > a { color: ' + newval['link-color'] + '; }';
+
+			// Link hover color.
+			style_css +=
+				'html .pt-header .pt-nav-container .blogsy-header-nav > li > a:hover, ' +
+				'html .pt-header .pt-nav-container .blogsy-header-nav > li.hovered > a, ' +
+				'html .pt-header .pt-nav-container .blogsy-header-nav > li.current_page_item > a, ' +
+				'html .pt-header .pt-nav-container .blogsy-header-nav > li.current-menu-item > a, ' +
+				'html .pt-header .pt-nav-container .blogsy-header-nav > li.current-menu-ancestor > a' +
+				'html .pt-header .pt-nav-container .blogsy-header-v-nav > li a:focus, ' +
+				'html .pt-header .pt-nav-container .blogsy-header-v-nav > li a:hover, ' +
+				'html .pt-header .pt-nav-container .pt-header-widget .blogsy-social-icons-widget:not(.minimal-fill, .rounded-fill) > ul > li > a:focus, ' +
+				'html .pt-header .pt-nav-container .pt-header-widget .blogsy-social-icons-widget:not(.minimal-fill, .rounded-fill) > ul > li > a:hover { color: ' + newval['link-hover-color'] + '; }';
+
+			// Link active color.
+			style_css +=
+				'html .pt-header .pt-nav-container .blogsy-header-nav > li.menu-item > a { --menu-shape-color: ' + newval['link-active-color'] + '; }';
+
+			$style_tag.html(style_css);
+		});
+	});
+
+	/**
+	 * Header navigation border.
+	 */
+	api('blogsy_header_navigation_border', function (value) {
+		value.bind(function (newval) {
+			var $header = $('#site-header .pt-nav-container');
+
+			if (!$header.length) {
+				return;
+			}
+
+			var css_selector = `.pt-header-layout-4 .pt-header .pt-header-inner .pt-nav-container .pt-header-container`;
+
+			$style_tag = blogsy_get_style_tag('blogsy_header_navigation_border');
 			var style_css = blogsy_design_options_css(css_selector, newval, 'border');
 
 			$style_tag.html(style_css);
@@ -1325,7 +1429,11 @@
 			$style_tag = blogsy_get_style_tag('blogsy_hero_slider_height');
 			var style_css = '';
 
+			// Main hero (normal).
 			style_css += blogsy_range_field_css('#blogsy-hero .pt-hero-slider .post-wrapper', 'height', newval, true, 'px');
+
+			// Nexo card (HALF)
+			style_css += blogsy_range_field_css('#blogsy-hero .blogsy-post-nexo-widget:not(.pt-hero-slider) .post-wrapper', 'height', newval, true, 'px', true, 9.5);
 
 			$style_tag.html(style_css);
 		});

@@ -115,6 +115,9 @@ $blogsy_posts->rewind_posts();
 									if ( $blogsy_posts->have_posts() ) :
 										while ( $blogsy_posts->have_posts() ) :
 											$blogsy_posts->the_post();
+											if( ! has_post_thumbnail() ) {
+												continue;
+											}
 											?>
 											<div class="thumb-wrapper swiper-slide">
 												<div class="image-wrapper">

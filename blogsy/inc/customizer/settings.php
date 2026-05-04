@@ -1573,7 +1573,8 @@ class Settings {
 						'fallback_refresh'    => true,
 					],
 				],
-				// Top Bar design options heading.
+
+				// Design options heading.
 				'blogsy_header_heading_design_options'   => [
 					'transport'         => 'postMessage',
 					'sanitize_callback' => 'blogsy_sanitize_toggle',
@@ -1589,7 +1590,7 @@ class Settings {
 					],
 				],
 
-				// Top Bar Background.
+				// Background.
 				'blogsy_header_background'               => [
 					'transport'         => 'postMessage',
 					'sanitize_callback' => 'blogsy_sanitize_design_options',
@@ -1616,7 +1617,7 @@ class Settings {
 					],
 				],
 
-				// Top Bar Text Color.
+				// Text Color.
 				'blogsy_header_text_color'               => [
 					'transport'         => 'postMessage',
 					'sanitize_callback' => 'blogsy_sanitize_design_options',
@@ -1645,7 +1646,7 @@ class Settings {
 					],
 				],
 
-				// Top Bar Border.
+				// Border.
 				'blogsy_header_border'                   => [
 					'transport'         => 'postMessage',
 					'sanitize_callback' => 'blogsy_sanitize_design_options',

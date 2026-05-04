@@ -6,7 +6,7 @@ Tested up to: 6.9
 Requires PHP: 7.4
 License: GNU General Public License v2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.11
+Stable tag: 1.0.12
 
 A lightweight and highly customizable multi-purpose theme that makes it easy for anyone to create their perfect website.
 
@@ -27,6 +27,16 @@ Blogsy WordPress Theme, Copyright (c) 2025, Peregrinethemes
 Blogsy is distributed under the terms of the GNU GPLs
 
 == Changelog ==
+
+= 1.0.12 - 04 May 2026 =
+* Improved: Starter content removed.
+* Improved: Stories styles.
+* Updated: Screenshot changed.
+* Updated: The `blogsy_range_field_css` function to support additional parameters for half divide and custom values.
+* Added: New header navigation background color and text color options in the customizer.
+* Improved: Responsive styles for header navigation in different layouts.
+* Improved: Dynamic styles for hero slider height and added support for Nexo card height adjustments.
+* Updated: Icon set with new icons and improved existing ones.
 
 = 1.0.11 - 21 March 2026 =
 * Fixed: Hero slider thumbnail progress-bar issue.
@@ -150,8 +160,8 @@ Copyright (c) 2015 Michał Sajnóg, MIT License, https://github.com/michalsnik/a
 = Author Sidebar Widget =
 
 * License: Creative Commons Zero (CC0) Public Domain
-* License Url: https://stocksnap.io/license
-* Sources: https://stocksnap.io/photo/business-man-IVZBYWKEFM
+* License Url: https://pxhere.com/en/license
+* Sources: https://pxhere.com/en/photo/1709248
 
 == Patterns Images ==
 
