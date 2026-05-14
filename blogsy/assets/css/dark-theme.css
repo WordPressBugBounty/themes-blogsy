@@ -2,8 +2,8 @@
     background: rgba(160, 163, 180, 0.18);
     color: black;
     border-radius: 50px;
-	width: 72px;
-    height: 36px;
+	width: 7.2rem;
+    height: 3.6rem;
     position: relative;
     cursor: pointer;
 }
@@ -16,12 +16,12 @@
 body .dark-mode-switcher .switcher-wrap {
     line-height: 1;
     position: absolute;
-    width: 28px;
-    height: 28px;
-    left: 4px;
+    width: 2.8rem;
+    height: 2.8rem;
+    left: 0.4rem;
     top: 50%;
     transform: translateY(-50%);
-    padding: 5px;
+    padding: 0.5rem;
     background: #fff;
     border-radius: 50px;
     display: flex;
@@ -41,7 +41,7 @@ html[scheme="light"] .dark-mode-switcher .dark-icon {
 }
 
 html[scheme="dark"] .dark-mode-switcher .switcher-wrap {
-    left: calc(100% - 33px );
+    left: calc(100% - 3.3rem);
 }
 
 

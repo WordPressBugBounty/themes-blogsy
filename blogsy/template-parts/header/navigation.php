@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<nav class="blogsy-header-nav-wrapper rs-header-element hover-style-2">
+<nav class="blogsy-header-nav-wrapper pt-header-element hover-style-2">
 	<?php
 	// Primary Menu.
 	if ( has_nav_menu( 'primary_menu' ) ) {

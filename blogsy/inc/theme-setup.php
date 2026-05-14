@@ -115,6 +115,9 @@ final class Theme {
 		/* Theme Hooks */
 		require_once BLOGSY_THEME_DIR . '/inc/hooks.php';
 
+		/* Back Compatibility */
+		require_once BLOGSY_THEME_DIR . '/inc/back-compat.php';
+
 		/* Woocommerce */
 		if ( class_exists( 'WooCommerce' ) ) {
 			require_once BLOGSY_THEME_DIR . '/inc/woocommerce.php';
@@ -323,6 +326,10 @@ final class Theme {
 					[
 						'name'  => 'core-style-3',
 						'label' => __( 'Style 3', 'blogsy' ),
+					],
+					[
+						'name'  => 'core-style-4',
+						'label' => __( 'Style 4', 'blogsy' ),
 					],
 				],
 			],
@@ -575,6 +582,28 @@ final class Theme {
 				'id'            => 'sidebar-1',
 				'description'   => esc_html__( 'Default Sidebar Widgets', 'blogsy' ),
 				'before_widget' => '<div id="%1$s" class="%2$s blogsy-sidebar-widget card-layout-w" data-aos="fade-up">',
+				'after_widget'  => '</div>',
+				'before_title'  => '<div class="blogsy-divider-heading divider-style-' . esc_attr( $divider_style ) . ' pt-mb-1">
+										<div class="divider divider-1"></div>
+											<div class="divider divider-2"></div>
+											<h4 class="title">
+												<span class="title-inner">
+													<span class="title-text">',
+				'after_title'   => '</span>
+								</span>
+							</h4>
+							<div class="divider divider-3"></div>
+							<div class="divider divider-4"></div>
+						</div>',
+			]
+		);
+
+		register_sidebar(
+			[
+				'name'          => esc_html__( 'Offcanvas Sidebar', 'blogsy' ),
+				'id'            => 'offcanvas-sidebar',
+				'description'   => esc_html__( 'Offcanvas Sidebar Widgets', 'blogsy' ),
+				'before_widget' => '<div id="%1$s" class="%2$s blogsy-sidebar-widget" data-aos="fade-up">',
 				'after_widget'  => '</div>',
 				'before_title'  => '<div class="blogsy-divider-heading divider-style-' . esc_attr( $divider_style ) . ' pt-mb-1">
 										<div class="divider divider-1"></div>

@@ -29,6 +29,7 @@ function blogsy_get_customizer_widgets(): array {
 		'socials'        => 'Blogsy_Customizer_Widget_Socials',
 		'search'         => 'Blogsy_Customizer_Widget_Search',
 		'darkmode'       => 'Blogsy_Customizer_Widget_Darkmode',
+		'offcanvas'       => 'Blogsy_Customizer_Widget_Offcanvas',
 		'button'         => 'Blogsy_Customizer_Widget_Button',
 	];
 

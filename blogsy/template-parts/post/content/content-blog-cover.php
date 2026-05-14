@@ -108,20 +108,19 @@ if ( ! empty( $categories ) ) {
 					<?php endif; ?>
 				</div>
 				<h2 class="title"><span class="title-span"><a class="title-animation-underline" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></span></h2>
-				<p class="excerpt">
 				<?php
 				$blogsy_excerpt_length = Helper::get_option( 'excerpt_length' );
 				$blogsy_excerpt        = blogsy_get_the_excerpt( $blogsy_excerpt_length );
 				$blogsy_feed_type      = Helper::get_option( 'post_feed_content_type' );
+				$blogsy_excerpt_more   = Helper::get_option( 'excerpt_more' );
 				if ( post_password_required() ) {
 					esc_html_e( 'This content is password protected. To view it please go to the post page and enter the password.', 'blogsy' );
-				} elseif ( '1' === $blogsy_feed_type && $blogsy_excerpt ) {
-					echo esc_html( $blogsy_excerpt );
+				} elseif ( '1' === $blogsy_feed_type ) {
+					printf( '<p class="excerpt">%s</p>', esc_html( $blogsy_excerpt ) );
 				} else {
-					the_content();
+					printf( '<div class="excerpt">%s</div>', get_the_content() );
 				}
 				?>
-				</p>
 				<?php
 				if ( Helper::get_option( 'blog_read_more_enable' ) ) {
 					// Allow text to be filtered.

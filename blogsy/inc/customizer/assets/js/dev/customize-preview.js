@@ -1430,10 +1430,10 @@
 			var style_css = '';
 
 			// Main hero (normal).
-			style_css += blogsy_range_field_css('#blogsy-hero .pt-hero-slider .post-wrapper', 'height', newval, true, 'px');
+			style_css += blogsy_range_field_css('#blogsy-hero .pt-hero-slider .post-wrapper, #blogsy-hero .blogsy-post-elastic-widget .swiper-vertical', 'height', newval, true, 'px');
 
-			// Nexo card (HALF)
-			style_css += blogsy_range_field_css('#blogsy-hero .blogsy-post-nexo-widget:not(.pt-hero-slider) .post-wrapper', 'height', newval, true, 'px', true, 9.5);
+			// Nexo card (half).
+			style_css += blogsy_range_field_css('#blogsy-hero:has(.pt-hero-slider) .blogsy-post-nexo-widget:not(.pt-hero-slider) .post-wrapper', 'height', newval, true, 'px', true, 9.5);
 
 			$style_tag.html(style_css);
 		});

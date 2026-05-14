@@ -259,6 +259,14 @@ class Options {
 					],
 				],
 				[
+					'classname' => 'blogsy_customizer_widget_offcanvas',
+					'type'      => 'offcanvas',
+					'values'    => [
+						'location'   => 'right',
+						'visibility' => 'all',
+					],
+				],
+				[
 					'classname' => 'blogsy_customizer_widget_search',
 					'type'      => 'search',
 					'values'    => [

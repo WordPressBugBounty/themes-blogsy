@@ -254,11 +254,15 @@ if ( ! function_exists( 'blogsy_get_post_views' ) ) {
  */
 function blogsy_get_the_excerpt( int $length = 100 ): string {
 
+	// return empty string if length is 0.
+	if ( 0 === $length ) {
+		return '';
+	}
 	$excerpt = get_the_excerpt();
 	if ( $excerpt ) {
 		$excerpt_more = Helper::get_option( 'excerpt_more' );
 		$excerpt      = wp_strip_all_tags( $excerpt );
-		$excerpt      = str_replace( '[â€¦]', '', $excerpt );
+		$excerpt      = str_replace( '[...]', '', $excerpt );
 		$excerpt      = trim( $excerpt );
 
 		if ( strlen( $excerpt ) > $length ) {
@@ -478,7 +482,7 @@ function blogsy_get_hero_data(): ?array {
 	if ( ! empty( $hero_categories ) ) {
 		$tax_query[] = [
 			'taxonomy' => 'category',
-			'field'    => 'slug',
+			'field'    => 'term_id',
 			'terms'    => $hero_categories,
 			'operator' => 'IN',
 		];
@@ -487,7 +491,7 @@ function blogsy_get_hero_data(): ?array {
 	if ( ! empty( $hero_tags ) ) {
 		$tax_query[] = [
 			'taxonomy' => 'post_tag',
-			'field'    => 'slug',
+			'field'    => 'term_id',
 			'terms'    => $hero_tags,
 			'operator' => 'IN',
 		];
@@ -758,8 +762,8 @@ function blogsy_get_stories_data(): ?array {
 
 	$categories = get_categories(
 		[
-			'number' => absint( $stories_max_category ),
-			'slug'   => ( ! empty( $stories_categories ) ) ? $stories_categories : [],
+			'number'  => absint( $stories_max_category ),
+			'include' => ( ! empty( $stories_categories ) ) ? $stories_categories : [],
 		]
 	);
 
@@ -837,7 +841,7 @@ function blogsy_get_pyml_data(): ?array {
 	if ( ! empty( $pyml_categories ) ) {
 		$tax_query[] = [
 			'taxonomy' => 'category',
-			'field'    => 'slug', // You can use 'name' or 'id' too.
+			'field'    => 'term_id', // You can use 'name' or 'id' too.
 			'terms'    => $pyml_categories,
 			'operator' => 'IN',
 		];
@@ -847,7 +851,7 @@ function blogsy_get_pyml_data(): ?array {
 	if ( ! empty( $pyml_tags ) ) {
 		$tax_query[] = [
 			'taxonomy' => 'post_tag',
-			'field'    => 'slug', // You can use 'name' or 'id' too.
+			'field'    => 'term_id', // You can use 'name' or 'id' too.
 			'terms'    => $pyml_tags,
 			'operator' => 'IN',
 		];

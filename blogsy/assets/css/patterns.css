@@ -446,6 +446,35 @@ html .editor-styles-wrapper .pt-absolute,
     }
 }
 
+/* Block heading 4 */
+
+.wp-block-heading.is-style-core-style-4 {
+    border-bottom: 1px solid rgba(127,129,133,0.4);
+    padding-bottom: 0.5rem;
+}
+
+.wp-block-heading.is-style-core-style-4::after,
+.wp-block-heading.is-style-core-style-4::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    background-color: var(--pt-accent-color);
+    z-index: -1;
+}
+
+.wp-block-heading.is-style-core-style-4::before {
+    width: 12px;
+    height: 12px;
+    border-radius: 50px;
+    bottom: -6px;
+}
+
+.wp-block-heading.is-style-core-style-4::after {
+    width: 80px;
+    height: 3px;
+    bottom: -2px;
+}
+
 /* Button arrow */
 
 .is-btn-arrow .wp-element-button:after {

@@ -23,27 +23,33 @@ class Starter_Content {
 	 */
 	public static function get(): array {
 		return [
-			'widgets'   => [
-				'sidebar-1'       => [
+			'widgets' => [
+				'sidebar-1'         => [
 					'text_about',
 					'search',
 					'recent-posts',
 					'text_business_info',
 				],
-				'blogsy-footer-1' => [
+				'offcanvas-sidebar' => [
+					'text_about',
+					'recent-posts',
+					'meta',
+					'text_business_info',
+				],
+				'blogsy-footer-1'   => [
 					'text_about',
 				],
-				'blogsy-footer-2' => [
+				'blogsy-footer-2'   => [
 					'recent-posts',
 				],
-				'blogsy-footer-3' => [
+				'blogsy-footer-3'   => [
 					'archives' => [
 						'title' => __( 'Archives', 'blogsy' ),
 						'count' => true,
 						'type'  => 'monthly',
 					],
 				],
-				'blogsy-footer-4' => [
+				'blogsy-footer-4'   => [
 					'text_business_info',
 				],
 			],

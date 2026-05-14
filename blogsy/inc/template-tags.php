@@ -26,7 +26,7 @@ if ( ! function_exists( 'blogsy_logo' ) ) :
 	 * @param bool $show_logo Print the logo or return as string.
 	 * @return string|null
 	 */
-	function blogsy_logo( bool $show_logo = true ) {
+	function blogsy_logo( $show_logo = true ) {
 		$display_site_description = Helper::get_option( 'display_tagline' );
 		$site_title               = get_bloginfo( 'name' );
 		$site_description         = get_bloginfo( 'description' );
@@ -372,6 +372,49 @@ if ( ! function_exists( 'blogsy_header_widget_darkmode' ) ) :
 					<?php echo Icon::get_svg( 'moon', '', [ 'aria-hidden' => 'true' ] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</span>
 			</span>
+		</div>
+		<?php
+	}
+endif;
+
+if ( ! function_exists( 'blogsy_header_widget_offcanvas' ) ) :
+	/**
+	 * Outputs the header offcanvas widget.
+	 *
+	 * @since 1.0.0
+	 * @param array $options Array of widget options.
+	 */
+	function blogsy_header_widget_offcanvas( array $options ): void {
+		?>
+		<div class="blogsy-offcanvas">
+			<div class="offcanvas-opener-wrapper">
+				<span class="offcanvas-opener" tabindex="0" role="button" aria-label="<?php esc_attr_e( 'Open Offcanvas Sidebar', 'blogsy' ); ?>">
+					<span class="hamburger">
+						<span></span>
+						<span></span>
+						<span></span>
+					</span>
+				</span>
+			</div>
+			<div class="offcanvas-wrapper position-left">
+				<div class="offcanvas-container">
+					<div class="offcanvas-container-inner">
+						<div class="offcanvas-close" tabindex="0" role="button" aria-label="<?php esc_attr_e( 'Close Offcanvas Sidebar', 'blogsy' ); ?>">
+							<span class="cross-line top-left"></span>
+							<span class="cross-line top-right"></span>
+							<span class="cross-line bottom-left"></span>
+							<span class="cross-line bottom-right"></span>
+						</div>
+						<div class="offcanvas-content">
+							<?php
+							if ( is_active_sidebar( 'offcanvas-sidebar' ) ) {
+								dynamic_sidebar( 'offcanvas-sidebar' );
+							}
+							?>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<?php
 	}

@@ -1501,6 +1501,9 @@ class Settings {
 							'darkmode' => [
 								'max_uses' => 1,
 							],
+							'offcanvas' => [
+								'max_uses' => 1,
+							],
 							'button'   => [
 								'max_uses' => 4,
 							],
@@ -1697,11 +1700,11 @@ class Settings {
 					'label'             => esc_html__( 'Layout', 'blogsy' ),
 					'description'       => esc_html__( 'Choose blog layout.', 'blogsy' ),
 					'priority'          => 35,
-					'choices'           => [
+					'choices'           => apply_filters( 'blogsy_blog_layout_choices', [
 						'blog-horizontal' => esc_html__( 'Horizontal', 'blogsy' ),
 						'blog-vertical'   => esc_html__( 'Vertical', 'blogsy' ),
 						'blog-cover'      => esc_html__( 'Cover', 'blogsy' ),
-					],
+					] ),
 					'required'          => [
 						[
 							'control'  => 'blogsy_archive_template',

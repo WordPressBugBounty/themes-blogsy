@@ -19,21 +19,31 @@ $blogsy_args = [
 	'post_status'         => 'publish',
 	'posts_per_page'      => Helper::get_option( 'ticker_post_number' ), // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 	'ignore_sticky_posts' => true,
-	'tax_query'           => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-		[
-			'taxonomy' => 'post_format',
-			'field'    => 'slug',
-			'terms'    => [ 'post-format-quote' ],
-			'operator' => 'NOT IN',
-		],
+];
+
+$tax_query = [
+	[
+		'taxonomy' => 'post_format',
+		'field'    => 'slug',
+		'terms'    => [ 'post-format-quote' ],
+		'operator' => 'NOT IN',
 	],
 ];
 
-$blogsy_ticker_categories = (array) Helper::get_option( 'ticker_category' );
+$blogsy_ticker_categories = array_filter( array_map( 'absint', (array) Helper::get_option( 'ticker_category' ) ) );
 
-if ( [] !== $blogsy_ticker_categories ) {
-	$blogsy_args['category_name'] = implode( ', ', $blogsy_ticker_categories );
+
+// If categories are specified
+if ( ! empty( $blogsy_ticker_categories ) ) {
+	$tax_query[] = [
+		'taxonomy' => 'category',
+		'field'    => 'term_id',
+		'terms'    => $blogsy_ticker_categories,
+		'operator' => 'IN',
+	];
 }
+
+$blogsy_args['tax_query'] = $tax_query;
 
 $blogsy_args = apply_filters( 'blogsy_ticker_query_args', $blogsy_args );
 

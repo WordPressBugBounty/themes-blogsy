@@ -329,8 +329,8 @@ if ( ! class_exists( 'Dynamic_Styles' ) ) :
 				// Hero post title font size.
 				$css .= $this->get_range_field_css( '#blogsy-hero .pt-hero-slider .post-wrapper .title', 'font-size', 'hero_slider_title_font_size', true );
 				// Hero height.
-				$css .= $this->get_range_field_css( '#blogsy-hero .pt-hero-slider .post-wrapper', 'height', 'hero_slider_height' );
-				$css .= $this->get_range_field_css( '#blogsy-hero .blogsy-post-nexo-widget:not(.pt-hero-slider) .post-wrapper', 'height', 'hero_slider_height', true, 'px', true, 9.5 );
+				$css .= $this->get_range_field_css( '#blogsy-hero .pt-hero-slider .post-wrapper, #blogsy-hero .blogsy-post-elastic-widget .swiper-vertical', 'height', 'hero_slider_height' );
+				$css .= $this->get_range_field_css( '#blogsy-hero:has(.pt-hero-slider) .blogsy-post-nexo-widget:not(.pt-hero-slider) .post-wrapper', 'height', 'hero_slider_height', true, 'px', true, 9.5 );
 			}
 
 			/**

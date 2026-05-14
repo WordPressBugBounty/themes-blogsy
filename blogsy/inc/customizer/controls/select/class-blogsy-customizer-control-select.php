@@ -116,7 +116,7 @@ if ( ! class_exists( 'Blogsy_Customizer_Control_Select' ) ) :
 					if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
 						foreach ( $terms as $term ) {
 							if ( is_object( $term ) ) {
-								$choices[ $term->slug ] = $term->name;
+								$choices[ $term->term_id ] = $term->name;
 							}
 						}
 					}
