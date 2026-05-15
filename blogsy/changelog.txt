@@ -1,4 +1,8 @@
-﻿= 1.0.13 - 14 May 2026 =
+﻿= 1.0.14 - 15 May 2026 =
+* Fixed: Remove Offcanvas from header default.
+* Fixed: topbar  content z-index issue when offcanvas is open.
+
+= 1.0.13 - 14 May 2026 =
 * Migrate from slug based customizer settings to term_id to avoid issues in RTL.
 * Added: New Offcanvas widget in the Customizer with visibility options and starter sidebar support.
 * Updated: Dynamic styles for Offcanvas and Hero Slider compatibility, plus refined navigation markup.

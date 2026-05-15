@@ -4777,7 +4777,6 @@ body:has(.pt-header-widget__offcanvas, .pt-header-widget__search .popup-search-o
     padding-left: 1rem;
     padding-right: 1rem;
     position: relative;
-    z-index: 5;
 }
 
 .blogsy-topbar .blogsy-topbar-widget:first-child {
