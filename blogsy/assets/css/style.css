@@ -1532,6 +1532,13 @@ body .e-con {
     clear: both;
 }
 
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
 /* Content Wrapper Page */
 
 .page-content-wrapper {
@@ -7561,6 +7568,10 @@ img.blogsy-logo-image.dark-logo {
     flex-wrap: wrap;
     gap: 1.5rem;
     flex-grow: 1;
+}
+
+.blog-horizontal-2 .post-wrapper .terms-wrapper {
+    display: inline-flex;
 }
 
 .post-wrapper .term-item {

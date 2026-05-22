@@ -2,11 +2,11 @@
 Contributors: peregrinethemes
 Tags: one-column, two-columns, right-sidebar, left-sidebar, grid-layout, footer-widgets, blog, news, e-commerce, custom-menu, custom-logo, post-formats, sticky-post, editor-style, threaded-comments, translation-ready, custom-colors, featured-images, full-width-template, rtl-language-support, theme-options, wide-blocks, block-styles, block-patterns
 Requires at least: 6.6
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
 License: GNU General Public License v2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.14
+Stable tag: 1.0.15
 
 A lightweight and highly customizable multi-purpose theme that makes it easy for anyone to create their perfect website.
 
@@ -27,6 +27,10 @@ Blogsy WordPress Theme, Copyright (c) 2025, Peregrinethemes
 Blogsy is distributed under the terms of the GNU GPLs
 
 == Changelog ==
+
+= 1.0.15 - 22 May 2026 =
+* Updated: WordPress 7.0 compatibility check.
+* Added: Clearfix utility and update styles for blog horizontal layout.
 
 = 1.0.14 - 15 May 2026 =
 * Fixed: Remove Offcanvas from header default.

@@ -1,4 +1,8 @@
-﻿= 1.0.14 - 15 May 2026 =
+﻿= 1.0.15 - 22 May 2026 =
+* Updated: WordPress 7.0 compatibility check.
+* Added: Clearfix utility and update styles for blog horizontal layout.
+
+= 1.0.14 - 15 May 2026 =
 * Fixed: Remove Offcanvas from header default.
 * Fixed: topbar  content z-index issue when offcanvas is open.
 
