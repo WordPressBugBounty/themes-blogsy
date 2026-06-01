@@ -273,7 +273,7 @@ final class Theme {
 	public function load(): void {
 		\Blogsy\Customizer\Settings::instance();
 		\Blogsy\Dynamic_Styles::instance();
-
+		\Blogsy\Select2_Ajax::instance();
 		/* Admin Setup */
 		if ( is_admin() ) {
 			// Initialize Admin.

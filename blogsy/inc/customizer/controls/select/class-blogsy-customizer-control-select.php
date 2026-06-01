@@ -90,71 +90,136 @@ if ( ! class_exists( 'Blogsy_Customizer_Control_Select' ) ) :
 		 * @param array                $args    Default parent's arguments.
 		 */
 		public function __construct( $manager, $id, $args = [] ) {
-			parent::__construct( $manager, $id, $args );
 
-			if ( ! $this->is_select2 ) {
-				return;
-			}
+			parent::__construct( $manager, $id, $args );
 
 			if ( is_callable( $this->data_source ) ) {
 				$this->choices = call_user_func( $this->data_source );
-				return;
-			}
 
-			$choices = [];
+			} elseif ( $this->is_select2 && $this->data_source ) {
+				// For select2 controls with a data source, only load labels for the currently selected values.
+				// All other options are loaded on demand via AJAX.
+				$selected_values = $this->value();
 
-			switch ( $this->data_source ) {
-				case 'category':
-				case 'tags':
-					$taxonomy = 'category' === $this->data_source ? ( $this->data_source_name ?? 'category' ) : ( $this->data_source_name ?? 'post_tag' );
-					$args     = [
-						'hide_empty' => ( 'category' === $this->data_source ),
-						'taxonomy'   => $taxonomy,
-					];
-					$terms    = get_terms( $args );
+				if ( ! is_array( $selected_values ) ) {
+					$selected_values = $selected_values ? explode( ',', (string) $selected_values ) : [];
+				}
 
-					if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-						foreach ( $terms as $term ) {
-							if ( is_object( $term ) ) {
-								$choices[ $term->term_id ] = $term->name;
+				$selected_values = array_filter( array_map( 'trim', $selected_values ) );
+				$selected_values = array_unique( $selected_values );
+
+				if ( ! empty( $selected_values ) ) {
+					$selected_ids = array_map( 'strval', $selected_values );
+					if ( 'post_types' !== $this->data_source && 'post_type' !== $this->data_source ) {
+						$selected_ids = array_map( 'intval', $selected_values );
+					}
+
+					$choices = [];
+
+					switch ( $this->data_source ) {
+						case 'category':
+							$args  = [
+								'taxonomy'   => $this->data_source_name ?? 'category',
+								'hide_empty' => false,
+								'include'    => $selected_ids,
+							];
+							$terms = get_terms( $args );
+
+							if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+								foreach ( $terms as $term ) {
+									$choices[ $term->term_id ] = $term->name;
+								}
 							}
-						}
-					}
-					break;
 
-				case 'page':
-					$pages = get_pages();
+							break;
 
-					if ( ! empty( $pages ) ) {
-						foreach ( $pages as $page ) {
-							$choices[ $page->ID ] = $page->post_title;
-						}
-					}
-					break;
-				case 'post_types':
-				case 'post_type':
-					global $wp_post_types;
-					$post_types = get_post_types(
-						[
-							'public'              => true,
-							'exclude_from_search' => false,
-						]
-					);
-					foreach ( $post_types as $name ) {
-						if ( isset( $wp_post_types[ $name ]->labels->menu_name ) ) {
-							$choices[ $name ] = $wp_post_types[ $name ]->labels->menu_name;
-						} else {
-							$choices[ $name ] = ucfirst( $name );
-						}
-					}
-					break;
+						case 'tags':
+							$args  = [
+								'taxonomy'   => 'post_tag',
+								'hide_empty' => false,
+								'include'    => $selected_ids,
+							];
+							$terms = get_terms( $args );
 
-				default:
-					// Handle other data sources if needed.
-					break;
+							if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+								foreach ( $terms as $term ) {
+									$choices[ $term->term_id ] = $term->name;
+								}
+							}
+
+							break;
+
+						case 'page':
+							$pages = get_posts(
+								[
+									'post_type'      => 'page',
+									'post_status'    => 'publish',
+									'posts_per_page' => count( $selected_ids ),
+									'post__in'       => $selected_ids,
+									'orderby'        => 'post__in',
+								]
+							);
+
+							if ( ! empty( $pages ) ) {
+								foreach ( $pages as $page ) {
+									$choices[ $page->ID ] = $page->post_title;
+								}
+							}
+							break;
+						case 'post':
+							$posts = get_posts(
+								[
+									'post_type'      => 'post',
+									'post_status'    => 'publish',
+									'posts_per_page' => count( $selected_ids ),
+									'post__in'       => $selected_ids,
+									'orderby'        => 'post__in',
+								]
+							);
+
+							if ( ! empty( $posts ) ) {
+								foreach ( $posts as $post ) {
+									$choices[ $post->ID ] = $post->post_title;
+								}
+							}
+
+							break;
+						case 'post_types':
+						case 'post_type':
+							global $wp_post_types;
+
+							foreach ( $selected_ids as $name ) {
+								if ( isset( $wp_post_types[ $name ]->labels->menu_name ) ) {
+									$choices[ $name ] = $wp_post_types[ $name ]->labels->menu_name;
+								} else {
+									$choices[ $name ] = ucfirst( $name );
+								}
+							}
+							break;
+
+						default:
+							if ( post_type_exists( $this->data_source ) ) {
+								$posts = get_posts(
+									[
+										'post_type'      => $this->data_source,
+										'post_status'    => 'publish',
+										'posts_per_page' => count( $selected_ids ),
+										'post__in'       => $selected_ids,
+										'orderby'        => 'post__in',
+									]
+								);
+
+								if ( ! empty( $posts ) ) {
+									foreach ( $posts as $post ) {
+										$choices[ $post->ID ] = $post->post_title;
+									}
+								}
+							}
+							break;
+					}
+					$this->choices = $choices;
+				}
 			}
-
-			$this->choices = $choices;
 		}
 
 
@@ -166,11 +231,14 @@ if ( ! class_exists( 'Blogsy_Customizer_Control_Select' ) ) :
 		public function to_json() {
 			parent::to_json();
 
-			$this->json['subtitle']    = $this->subtitle;
-			$this->json['choices']     = $this->choices;
-			$this->json['placeholder'] = $this->placeholder;
-			$this->json['is_select2']  = $this->is_select2;
-			$this->json['multiple']    = $this->multiple ? ' multiple="multiple"' : '';
+			$this->json['subtitle']         = $this->subtitle;
+			$this->json['choices']          = $this->choices;
+			$this->json['placeholder']      = $this->placeholder;
+			$this->json['is_select2']       = $this->is_select2;
+			$this->json['multiple']         = $this->multiple ? ' multiple="multiple"' : '';
+			$this->json['data_source']      = $this->data_source;
+			$this->json['data_source_name'] = $this->data_source_name;
+			$this->json['nonce']            = wp_create_nonce( 'blogsy_customizer_nonce' );
 
 			if ( $this->multiple ) {
 				$this->json['value'] = implode( ',', (array) $this->json['value'] );
@@ -231,6 +299,7 @@ if ( ! class_exists( 'Blogsy_Customizer_Control_Select' ) ) :
 				<# if ( data.label ) { #>
 					<div class="customize-control-title">
 						<span>{{{ data.label }}}</span>
+
 						<# if ( data.description ) { #>
 							<i class="blogsy-info-icon">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
@@ -246,24 +315,24 @@ if ( ! class_exists( 'Blogsy_Customizer_Control_Select' ) ) :
 
 				<select class="blogsy-select-control" {{{ data.link }}}{{{ data.multiple }}}>
 
-					<# if ( data.is_select2 ) { #>
-
-						<# _.each( data.choices, function( label, choice ) {
-							if(data.value) { #>
-
-							<option value="{{ choice }}" <# if ( -1 !== data.value.indexOf( choice ) ) { #> selected="selected" <# } #>>{{ label }}</option>
-
-						<# } } ) #>
-
-					<#  } else { #>
+					<# if ( ! data.is_select2 ) { #>
+						<!-- Regular select: render all choices -->
 						<# for ( key in data.choices ) { #>
-							<option value="{{ key }}" <# if ( key === data.value ) { #> checked="checked" <# } #>>{{ data.choices[ key ] }}</option>
+							<option title="{{ data.choices[ key ] }}" value="{{ key }}" <# if ( key === data.value ) { #> selected="selected" <# } #>>{{ data.choices[ key ] }}</option>
+						<# } #>
+					<# } else { #>
+						<!-- Select2: render selected values only (rest loaded via AJAX or static) -->
+						<# if ( data.value ) { #>
+							<# var selectedChoices = data.value ? data.value.toString().split( ',' ) : []; #>
+							<# _.each( selectedChoices, function( choice ) { #>
+								<# var label = data.choices && data.choices[ choice ] ? data.choices[ choice ] : choice; #>
+								<option value="{{ choice }}" selected="selected">{{ label }}</option>
+							<# } ) #>
 						<# } #>
 					<# } #>
+
 				</select>
-				<# if ( data.subtitle ) { #>
-					<div class="customize-control-subtilte">{{{ data.subtitle }}}</div>
-				<# } #>
+
 			</label>
 
 			</div><!-- END .blogsy-control-wrapper -->

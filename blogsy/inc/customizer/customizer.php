@@ -489,7 +489,8 @@ class Customizer {
 			'color_palette'           => [ '#ffffff', '#000000', '#e4e7ec', '#0068c8', '#f7b40b', '#e04b43', '#30373e', '#8a63d4' ],
 			'preview_url_for_section' => $this->get_preview_urls_for_section(),
 			'strings'                 => [
-				'selectCategory' => esc_html__( 'Select a category', 'blogsy' ),
+				'select_category'    => esc_html__( 'Select a category', 'blogsy' ),
+				'error_loading_data' => esc_html__( 'Error loading data', 'blogsy' ),
 			],
 		];
 

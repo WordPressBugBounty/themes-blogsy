@@ -1,79 +1,91 @@
-;( function ( $ ) {
+;( function( $ ) {
 
-	'use strict';
+ 	'use strict';
 
-	wp.customize.controlConstructor['blogsy-select'] = wp.customize.Control.extend(
-		{
+ 	wp.customize.controlConstructor['blogsy-select'] = wp.customize.Control.extend({
 
-			ready: function () {
+		ready: function() {
 
-				'use strict';
+			'use strict';
 
-				var control = this;
+			var control = this;
 
-				if ( control.params.is_select2 ) {
+			if ( control.params.is_select2 ) {
 
-					// Init select2.
-					control.container.find( '.blogsy-select-control' ).select2(
-						{
-							placeholder: control.params.placeholder ?? blogsy_customizer_localized.strings.selectCategory,
-							allowClear: true
-						}
-					);
+				// Prepare select2 config
+				var select2Config = {
+					placeholder: control.params.placeholder ?? blogsy_customizer_localized.strings.select_category,
+					allowClear: true,
+					minimumInputLength: 0,
+					width: '100%'
+				};
 
-					// Populate select2 field.
-					control.container.on(
-						'select2:opening',
-						'.blogsy-select-control',
-						function () {
-							control.populate_select2();
-							control.container.off( 'select2:opening', '.blogsy-select-control' );
-						}
-					);
+				var ajaxUrl = ( typeof blogsy_customizer_localized !== 'undefined' && blogsy_customizer_localized.ajaxurl ) ? blogsy_customizer_localized.ajaxurl : ajaxurl;
+				var nonce = control.params.nonce || ( typeof blogsy_customizer_localized !== 'undefined' ? blogsy_customizer_localized.wpnonce : '' );
 
-					control.container.on(
-						'select2:select select2:unselect select2:clear',
-						'.blogsy-select-control',
-						function () {
-							if ( ! $( this ).val() ) {
-								control.setting.set( [] );
-							}
-						}
-					);
-				}
+				if ( control.params.data_source ) {
+				select2Config.ajax = {
+					url: ajaxUrl,
+					type: 'POST',
+					dataType: 'json',
+					delay: 250,
+					data: function( params ) {
+						return {
+							action: 'blogsy_load_select2_data',
+							search: params.term || '',
+							page: params.page || 1,
+							data_source: control.params.data_source,
+							data_source_name: control.params.data_source_name,
+							nonce: nonce
+						};
+					},
+					processResults: function( data, params ) {
+						params.page = params.page || 1;
 
-			},
-
-			// Populate select2.
-			populate_select2: function ( e ) {
-
-				var self = this,
-				options  = '',
-				selected = '',
-				setting  = self.setting.get();
-
-				if ( '' === setting['font-family']) {
-					selected = ' selected="selected"';
-				}
-
-				$.each(
-					self.params.choices,
-					function ( id, name ) {
-
-						selected = '';
-
-						if ( setting && self.params.multiple && -1 !== setting.indexOf( id ) || ! self.params.multiple && id === setting ) {
-							selected = ' selected="selected"';
+						if ( data.success && data.data && data.data.results ) {
+							return {
+								results: data.data.results,
+								pagination: {
+									more: data.data.pagination && data.data.pagination.more ? data.data.pagination.more : false
+								}
+							};
 						}
 
-						options += '<option value="' + id + '"' + selected + '>' + name + '</option>';
+						return {
+							results: []
+						};
+					},
+					cache: true,
+					error: function(error) {
+						console.error( blogsy_customizer_localized.strings.error_loading_data, error );
 					}
-				);
+				};
+			}
 
-				self.container.find( '.blogsy-select-control' ).html( options );
+				// Init select2
+				control.container.find( '.blogsy-select-control' ).select2( select2Config );
+
+				// Handle select2 changes
+				control.container.on( 'select2:select select2:unselect select2:clear', '.blogsy-select-control', function() {
+					var value = $( this ).val();
+
+					if ( ! value || value.length === 0 ) {
+						control.setting.set( control.params.multiple ? [] : '' );
+					} else {
+						control.setting.set( value );
+					}
+				});
+
+			} else {
+				// Regular select: no special handling needed, just sanitize on change
+				control.container.on( 'change', '.blogsy-select-control', function() {
+					var value = $( this ).val();
+					control.setting.set( value );
+				});
 			}
 
 		}
-	);
+
+	});
 
 }( jQuery ) );
