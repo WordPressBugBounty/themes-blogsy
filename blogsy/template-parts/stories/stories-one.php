@@ -20,12 +20,6 @@ if ( ! empty( $categories ) && is_array( $categories ) ) {
 	foreach ( $categories as $cat_value ) {
 		$category_query_args = [
 			'cat'                 => absint( $cat_value->term_id ),
-			'meta_query'          => [
-				[
-					'key'     => '_thumbnail_id',
-					'compare' => 'EXISTS',
-				],
-			],
 			'ignore_sticky_posts' => true,
 			'fields'              => 'ids',
 			'no_found_rows'       => true,
@@ -38,7 +32,7 @@ if ( ! empty( $categories ) && is_array( $categories ) ) {
 		$preview_title     = '';
 		$thumbnail_id      = '';
 		$first_post        = $category_query->have_posts() ? $category_query->posts[0] : null;
-		$category_count    = $cat_value->count;
+		$category_count    = $cat_value->count > $args['max_inner_items'] ? $args['max_inner_items'] : $cat_value->count;
 		$animation_enabled = Helper::get_option( 'posts_animation' );
 		$animation_cls     = $animation_enabled ? ' has-animation' : '';
 
@@ -105,9 +99,6 @@ if ( ! empty( $categories ) && is_array( $categories ) ) {
 					<?php
 					if ( $category_count ) {
 						for ( $i = 0; $i < $category_count; $i++ ) {
-							if ( $i >= $args['max_inner_items'] ) {
-								break;
-							}
 							echo '<span class="stories-popup__indicator"></span>';
 						}
 					}

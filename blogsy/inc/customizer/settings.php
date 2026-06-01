@@ -1488,7 +1488,7 @@ class Settings {
 					'widgets'           => apply_filters(
 						'blogsy_main_header_widgets',
 						[
-							'search'   => [
+							'search'    => [
 								'max_uses' => 1,
 								'styles'   => apply_filters(
 									'blogsy_header_search_widget_styles',
@@ -1498,16 +1498,16 @@ class Settings {
 									]
 								),
 							],
-							'darkmode' => [
+							'darkmode'  => [
 								'max_uses' => 1,
 							],
 							'offcanvas' => [
 								'max_uses' => 1,
 							],
-							'button'   => [
+							'button'    => [
 								'max_uses' => 4,
 							],
-							'socials'  => [
+							'socials'   => [
 								'max_uses' => 2,
 								'styles'   => [
 									'minimal'        => esc_html__( 'Minimal', 'blogsy' ),
@@ -1522,7 +1522,7 @@ class Settings {
 									'xlarge'   => esc_html__( 'Extra Large', 'blogsy' ),
 								],
 							],
-							'text'     => [
+							'text'      => [
 								'max_uses' => 4,
 							],
 						]
@@ -1700,11 +1700,14 @@ class Settings {
 					'label'             => esc_html__( 'Layout', 'blogsy' ),
 					'description'       => esc_html__( 'Choose blog layout.', 'blogsy' ),
 					'priority'          => 35,
-					'choices'           => apply_filters( 'blogsy_blog_layout_choices', [
-						'blog-horizontal' => esc_html__( 'Horizontal', 'blogsy' ),
-						'blog-vertical'   => esc_html__( 'Vertical', 'blogsy' ),
-						'blog-cover'      => esc_html__( 'Cover', 'blogsy' ),
-					] ),
+					'choices'           => apply_filters(
+						'blogsy_blog_layout_choices',
+						[
+							'blog-horizontal' => esc_html__( 'Horizontal', 'blogsy' ),
+							'blog-vertical'   => esc_html__( 'Vertical', 'blogsy' ),
+							'blog-cover'      => esc_html__( 'Cover', 'blogsy' ),
+						]
+					),
 					'required'          => [
 						[
 							'control'  => 'blogsy_archive_template',
@@ -2801,7 +2804,7 @@ class Settings {
 					'title_format'      => esc_html__( '[live_title]', 'blogsy' ),
 					'live_title_id'     => 'category',
 					'add_text'          => esc_html__( 'Add new item', 'blogsy' ),
-					'max_item'          => apply_filters( 'blogsy_featured_category_max_item', 5 ),
+					'max_item'          => apply_filters( 'blogsy_featured_category_max_items', 5 ),
 					'limited_msg'       => wp_kses( 'Upgrade to <a target="_blank" href="https://peregrine-themes.com/blogsy/">Blogsy Pro</a> to be able to add more items and unlock other premium features!', blogsy_get_allowed_html_tags() ),
 					'fields'            => [
 						'category' => [
@@ -2982,7 +2985,7 @@ class Settings {
 					'title_format'      => esc_html__( '[live_title]', 'blogsy' ),
 					'live_title_id'     => 'link',
 					'add_text'          => esc_html__( 'Add new Feature', 'blogsy' ),
-					'max_item'          => apply_filters( 'blogsy_featured_links_max_item', 5 ),
+					'max_item'          => apply_filters( 'blogsy_featured_links_max_items', 5 ),
 					'limited_msg'       => wp_kses( 'Upgrade to <a target="_blank" href="https://peregrine-themes.com/blogsy/">Blogsy</a> to be able to add more items and unlock other premium features!', blogsy_get_allowed_html_tags() ),
 					'fields'            => [
 						'link'  => [

@@ -455,12 +455,13 @@ function blogsy_stories_ajax_call() {
 	}
 
 	$query_args = [
-		'post_type'      => 'post',
-		'post_status'    => 'publish',
-		'no_found_rows'  => true,
-		'posts_per_page' => absint( $post_per_page ),
-		'orderby'        => $order[0] ?? 'date',
-		'order'          => strtoupper( $order[1] ) ?? 'DESC',
+		'post_type'           => 'post',
+		'ignore_sticky_posts' => true,
+		'post_status'         => 'publish',
+		'no_found_rows'       => true,
+		'posts_per_page'      => absint( $post_per_page ),
+		'orderby'             => $order[0] ?? 'date',
+		'order'               => strtoupper( $order[1] ) ?? 'DESC',
 	];
 
 	$stories_elements = Helper::get_option( 'stories_elements' );

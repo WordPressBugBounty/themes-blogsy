@@ -1,4 +1,8 @@
-﻿= 1.0.16 - 1 June 2026 =
+﻿= 1.0.17 - 1 June 2026 =
+* Stories issue fixed.
+* Customizer settings filter updated.
+
+= 1.0.16 - 1 June 2026 =
 * Improved: Customizer select control now uses Ajax to load post/categories/tags etc.
 * Hero slider thumbnail issue fixed when there is not featured images is set in posts.
 

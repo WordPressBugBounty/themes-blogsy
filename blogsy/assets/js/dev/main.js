@@ -798,7 +798,7 @@
 				self.activeStoryId = storyId;
 				self.activeStoryCount = count;
 
-				self.storiesPopup.parent().addClass(`cat-${storyId}`);
+				self.storiesPopup.parent().addClass(`term-id-${storyId}`);
 				$('body').addClass('stories--open');
 				self.isStoriesOpen = true;  // NEW: Mark stories as open
 
@@ -819,7 +819,8 @@
 			let storyWrap = self.storiesPopup.find(`.stories-popup__story-wrap[data-id="${self.activeStoryId}"]`);
 			if (storyWrap.length) {
 				self.initSecondarySwiper(storyWrap);
-				self.addBackDrop(storyWrap.find('.image-wrapper img').first());
+				let img = storyWrap.find('.stories-popup__slide:first .image-wrapper img').first();
+				self.addBackDrop(img);
 				self.actionButtons.appendTo(storyWrap.parent());
 				self.storyArrows.appendTo(storyWrap.parent());
 			}
@@ -913,6 +914,7 @@
 
 		onMainSlideChange: function (swiperInstance) {
 			let self = this;
+			self.resumeFromPause();
 			let currentSlide = $(swiperInstance.slides[swiperInstance.activeIndex]);
 			let newStoryId = currentSlide.data('id');
 			let storyWrap = self.storiesPopup.find(`.stories-popup__story-wrap[data-id="${newStoryId}"]`);
@@ -934,8 +936,8 @@
 
 			// Update category class
 			self.storiesPopup.parent().removeClass((index, className) => {
-				return (className.match(/\bcat-\S+/g) || []).join(' ');
-			}).addClass(`cat-${self.activeStoryId}`);
+				return (className.match(/\bterm-id-\S+/g) || []).join(' ');
+			}).addClass(`term-id-${self.activeStoryId}`);
 
 			// Initialize secondary swiper for new slide
 			self.initSecondarySwiper(storyWrap);
@@ -945,7 +947,7 @@
 			self.storyArrows.appendTo(storyWrap.parent());
 
 			// Update ambient background
-			self.addBackDrop(storyWrap.find('.image-wrapper img').first());
+			self.addBackDrop(storyWrap.find('.stories-popup__slide:first .image-wrapper img').first());
 
 			// Update arrows state
 			self.updateArrowsState(swiperInstance);
@@ -1010,6 +1012,7 @@
 
 		onSecondarySlideChange: function (swiperInstance) {
 			let self = this;
+			self.resumeFromPause();
 			let currentIndex = swiperInstance.activeIndex;
 			let slide = $(swiperInstance.slides[currentIndex]);
 
@@ -1018,39 +1021,56 @@
 
 			// Check thumbnail
 			self.checkThumbnail(slide);
-			//Total slides
-			let totalSlides = swiperInstance.slides.length;
-			// Check if last slide
-			let isLastSlide = currentIndex === (swiperInstance.slides.length - 1);
 
-			if (isLastSlide) {
+			self.scheduleEndOfStoryAdvance(swiperInstance);
+		},
 
-				// Create a timeout handle and store it
-				let timeoutId = setTimeout(() => {
-					// Check if stories are still open before executing
-					if (!self.isStoriesOpen) {
-						return;
-					}
+		resumeFromPause: function () {
+			let self = this;
+			if (!self.isPaused) return;
 
-					if (
-						self.swiper &&
-						!self.swiper.destroyed &&
-						self.swiper.slides &&
-						self.swiper.slides.length > 0 &&
-						!self.swiper.isEnd
-					) {
-						self.swiper.slideNext();
-					} else {
-						self.closeStories();
-					}
+			self.isPaused = false;
+			const $pauseBtn = self.container.find('.stories-popup__button.pause');
+			$pauseBtn.removeClass('paused');
+			$pauseBtn.find('.blogsy-svg-icon--play').css('display', 'none');
+			$pauseBtn.find('.blogsy-svg-icon--pause').css('display', 'inline-block');
 
-					// Remove this timeout from pending list
-					self.pendingTimeouts = self.pendingTimeouts.filter(id => id !== timeoutId);
-				}, 4400);
-
-				// Add to pending timeouts list
-				self.pendingTimeouts.push(timeoutId);
+			if (self.secondarySwiper && self.secondarySwiper.autoplay) {
+				self.secondarySwiper.autoplay.start();
+				self.scheduleEndOfStoryAdvance(self.secondarySwiper);
 			}
+		},
+
+		scheduleEndOfStoryAdvance: function (swiperInstance) {
+			let self = this;
+			if (!swiperInstance || self.isPaused) return;
+
+			let currentIndex = swiperInstance.activeIndex;
+			let isLastSlide = currentIndex === swiperInstance.slides.length - 1;
+
+			if (!isLastSlide) return;
+
+			let timeoutId = setTimeout(() => {
+				if (!self.isStoriesOpen || self.isPaused) {
+					return;
+				}
+
+				if (
+					self.swiper &&
+					!self.swiper.destroyed &&
+					self.swiper.slides &&
+					self.swiper.slides.length > 0 &&
+					!self.swiper.isEnd
+				) {
+					self.swiper.slideNext();
+				} else {
+					self.closeStories();
+				}
+
+				self.pendingTimeouts = self.pendingTimeouts.filter(id => id !== timeoutId);
+			}, 4400);
+
+			self.pendingTimeouts.push(timeoutId);
 		},
 
 		checkThumbnail: function (slide) {
@@ -1116,9 +1136,10 @@
 
 			self.activeStoryId = null;
 			self.activeStoryCount = null;
+			self.isPaused = false;
 
 			self.storiesPopup.parent().removeClass(function (index, className) {
-				return (className.match(/\bcat-[^\s]+/g) || []).join(' ');
+				return (className.match(/\bterm-id-[^\s]+/g) || []).join(' ');
 			});
 
 			self.storiesWrap.find('.stories-popup__slide').removeAttr('style');
@@ -1130,6 +1151,13 @@
 				let _this = $(this);
 				// Toggle paused class first
 				_this.toggleClass('paused');
+
+				self.isPaused = _this.hasClass('paused');
+
+				// If paused, cancel any pending auto-advance timeouts immediately.
+				if (self.isPaused) {
+					self.cancelPendingTimeouts();
+				}
 
 				// SVG visibility toggle
 				if (_this.hasClass('paused')) {
@@ -1148,6 +1176,7 @@
 						self.secondarySwiper.autoplay.stop();
 					} else {
 						self.secondarySwiper.autoplay.start();
+						self.scheduleEndOfStoryAdvance(self.secondarySwiper);
 					}
 				}
 			});
