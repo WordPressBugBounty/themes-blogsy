@@ -436,6 +436,25 @@ add_filter( 'blogsy_main_header_selected_widgets', 'blogsy_filter_main_header_se
 
 
 /**
+ * Ajax handler to get nonces.
+ *
+ * @since 1.0.18
+ */
+function blogsy_get_nonces() {
+
+	wp_send_json_success(
+		[
+			'load_more_posts'     => wp_create_nonce( 'blogsy_get_load_more_posts' ),
+			'mailchimp_subscribe' => wp_create_nonce( 'blogsy_mailchimp_subscribe' ),
+			'story'               => wp_create_nonce( 'blogsy_story' ),
+		]
+	);
+}
+
+add_action( 'wp_ajax_blogsy_get_nonces', 'blogsy_get_nonces' );
+add_action( 'wp_ajax_nopriv_blogsy_get_nonces', 'blogsy_get_nonces' );
+
+/**
  * Ajax handler to load stories.
  *
  * @since 1.0.0

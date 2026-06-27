@@ -204,6 +204,14 @@ html .editor-styles-wrapper .pt-absolute,
     display: inline-block;
 }
 
+.wp-block-separator {
+	width: 100px;
+}
+
+.wp-block-separator.is-style-wide {
+    width: 100%;
+}
+
 @media (min-width: 1025px) {
     .guten-hide-desktop {
         display: none !important;

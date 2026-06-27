@@ -372,8 +372,9 @@ td {
     clip-path: none;
     background-color: #fff;
     color: #21759b;
+	font-size: 1.5rem;
     font-weight: 500;
-    padding: 14px 22px;
+    padding: 12px 20px;
     z-index: 100000;
     line-height: normal;
     text-underline-offset: 0.3rem;
@@ -2863,7 +2864,6 @@ html :where(.wp-block-search__button-inside .wp-block-search__inside-wrapper) .w
     padding: 0;
     margin: 0;
     list-style: none;
-    margin-bottom: 50px;
 }
 
 .bypostauthor {
@@ -3068,6 +3068,10 @@ html :where(.wp-block-search__button-inside .wp-block-search__inside-wrapper) .w
 .comments-compact-btn:hover {
     background: var(--pt-accent-color);
     box-shadow: 0 4px 15px var(--pt-accent-color);
+}
+
+.comment-list-wrapper+.comment-respond {
+    margin-top: 5rem;
 }
 
 .comments-pagination {
@@ -6074,7 +6078,7 @@ img.blogsy-logo-image.dark-logo {
     height: 100%;
     bottom: 0;
     left: 0;
-    z-index: 2;
+    z-index: 0;
     border-radius: inherit;
     background: linear-gradient(0deg, var(--term-color, var(--pt-accent-color)), transparent);
     transition: 0.8s;

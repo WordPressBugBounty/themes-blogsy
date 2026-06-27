@@ -1,4 +1,8 @@
-﻿= 1.0.17 - 1 June 2026 =
+﻿= 1.0.18 - 26 June 2026 =
+* Fixed: Add RTL adjustments in rtl.css for improved layout handling.
+* Fixed: Stories section, ajax request failed when using cache because nonce mismatch.
+
+= 1.0.17 - 1 June 2026 =
 * Stories issue fixed.
 * Customizer settings filter updated.
 

@@ -609,9 +609,13 @@ if ( ! function_exists( 'blogsy_random_post_archive_advertisement_part' ) ) :
 	 * The template tag for displaying advertisement in random post archives.
 	 *
 	 * @since 1.0.0
-	 * @param int $ad_to_rendered Index of the ad to be rendered.
+	 * @param int|null $ad_to_rendered Index of the ad to be rendered.
 	 */
-	function blogsy_random_post_archive_advertisement_part( int $ad_to_rendered ): void {
+	function blogsy_random_post_archive_advertisement_part( ?int $ad_to_rendered ): void {
+		if ( null === $ad_to_rendered ) {
+			return;
+		}
+
 		$ad_widgets = array_values(
 			array_filter(
 				(array) Helper::get_option( 'ad_widgets' ),

@@ -6,7 +6,7 @@ Tested up to: 7.0
 Requires PHP: 7.4
 License: GNU General Public License v2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.17
+Stable tag: 1.0.18
 
 A lightweight and highly customizable multi-purpose theme that makes it easy for anyone to create their perfect website.
 
@@ -27,6 +27,10 @@ Blogsy WordPress Theme, Copyright (c) 2025, Peregrinethemes
 Blogsy is distributed under the terms of the GNU GPLs
 
 == Changelog ==
+
+= 1.0.18 - 26 June 2026 =
+* Fixed: Add RTL adjustments in rtl.css for improved layout handling.
+* Fixed: Stories section, ajax request failed when using cache because nonce mismatch.
 
 = 1.0.17 - 1 June 2026 =
 * Stories issue fixed.

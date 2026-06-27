@@ -2808,9 +2808,10 @@ class Settings {
 					'limited_msg'       => wp_kses( 'Upgrade to <a target="_blank" href="https://peregrine-themes.com/blogsy/">Blogsy Pro</a> to be able to add more items and unlock other premium features!', blogsy_get_allowed_html_tags() ),
 					'fields'            => [
 						'category' => [
-							'title'   => esc_html__( 'Select category', 'blogsy' ),
-							'type'    => 'select',
-							'options' => blogsy_get_post_categories(),
+							'title'       => esc_html__( 'Select category', 'blogsy' ),
+							'type'        => 'select',
+							'is_select2'  => true,
+							'data_source' => 'category',
 						],
 						'image'    => [
 							'title' => esc_html__( 'Image', 'blogsy' ),

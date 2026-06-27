@@ -638,7 +638,7 @@
 	});
 
 	// Load more posts AJAX handler
-	$('.blogsy-post-load-more').on('click', function (e) {
+	$('.blogsy-post-load-more').on('click', async function (e) {
 		e.preventDefault();
 		const $btn = $(this);
 		if ($btn.hasClass('hide')) return;
@@ -648,12 +648,13 @@
 		const widgetId = $btn.data('widget-id');
 		const postId = $btn.data('post-id');
 		const nextPage = $btn.data('current-page') + 1;
+		const nonces = await blogsy.getNonces();
 
 		$.post({
 			url: blogsy_ajax_object.AjaxUrl,
 			data: {
 				action: 'blogsy_get_load_more_posts',
-				nonce: blogsy_ajax_object.nonce_get_load_more_posts,
+				nonce: nonces.load_more_posts,
 				widgetId,
 				postId,
 				pageNumber: nextPage,
@@ -838,14 +839,15 @@
 			self.container.addClass('added');
 		},
 
-		ajaxCall: function (max_inner_items) {
+		ajaxCall: async function (max_inner_items) {
 			let self = this;
+			const nonces = await blogsy.getNonces();
 			$.ajax({
 				method: 'POST',
 				url: blogsy_ajax_object.AjaxUrl,
 				data: {
 					action: 'blogsy_stories_ajax_call',
-					_wpnonce: blogsy_ajax_object.nonce_story,
+					_wpnonce: nonces.story,
 					storyIds: self.allStoryIds,
 					count: self.activeStoryCount,
 					inner_count: max_inner_items
@@ -861,11 +863,11 @@
 						self.openStory();
 						self.storiesPopup.parent().addClass('open');
 					} else {
-						console.error('Failed to load stories');
+						console.log('Failed to load stories');
 					}
 				},
 				error: function (xhr, status, error) {
-					console.error('AJAX Error:', error);
+					console.log('AJAX Error:', error);
 				},
 				complete: function () {
 					self.storiesWrap.removeClass('retrieving-stories');
@@ -1224,5 +1226,27 @@
 	window.blogsy = window.blogsy || {};
 	window.blogsy.blogsyHeroSlider = blogsyHeroSlider;
 	window.blogsy.blogsyPymlSlider = blogsyPymlSlider;
+
+	// Get nonces.
+	let blogsyNonces = null;
+	let blogsyNoncePromise = null;
+
+	window.blogsy.getNonces = async function () {
+
+		if ( blogsyNonces ) {
+		return blogsyNonces;
+	}
+
+	blogsyNoncePromise ??= fetch(
+		blogsy_ajax_object.AjaxUrl + '?action=blogsy_get_nonces'
+	)
+		.then( response => response.json() )
+		.then( json => {
+			blogsyNonces = json.data;
+			return blogsyNonces;
+		} );
+
+	return blogsyNoncePromise;
+	}
 
 })(jQuery);

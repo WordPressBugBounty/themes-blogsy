@@ -434,18 +434,16 @@ final class Theme {
 		}
 
 		wp_enqueue_script( 'blogsy-main-script', BLOGSY_THEME_URI . '/assets/js/' . $blogsy_dir . 'main' . $blogsy_suffix . '.js', [ 'jquery' ], BLOGSY_THEME_VERSION, true );
+
 		wp_localize_script(
 			'blogsy-main-script',
 			'blogsy_ajax_object',
 			[
-				'AjaxUrl'                   => admin_url( 'admin-ajax.php' ),
-				'nonce_get_load_more_posts' => wp_create_nonce( 'blogsy_get_load_more_posts' ),
-				'nonce_mailchimp_subscribe' => wp_create_nonce( 'blogsy_mailchimp_subscribe' ),
-				'nonce_story'               => wp_create_nonce( 'blogsy_story' ),
-				'navigation_cutoff'         => \Blogsy\Helper::get_option( 'header_navigation_cutoff' ),
-				'navigation_cutoff_upto'    => \Blogsy\Helper::get_option( 'header_navigation_cutoff_upto' ),
-				'navigation_cutoff_text'    => \Blogsy\Helper::get_option( 'header_navigation_cutoff_text' ),
-				'header_breakpoint'         => \Blogsy\Helper::get_option( 'header_breakpoint' ),
+				'AjaxUrl'                => admin_url( 'admin-ajax.php' ),
+				'navigation_cutoff'      => \Blogsy\Helper::get_option( 'header_navigation_cutoff' ),
+				'navigation_cutoff_upto' => \Blogsy\Helper::get_option( 'header_navigation_cutoff_upto' ),
+				'navigation_cutoff_text' => \Blogsy\Helper::get_option( 'header_navigation_cutoff_text' ),
+				'header_breakpoint'      => \Blogsy\Helper::get_option( 'header_breakpoint' ),
 			]
 		);
 

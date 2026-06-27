@@ -56,12 +56,16 @@ if ( in_array( $blog_layout, [ 'blog-vertical', 'blog-cover' ], true ) ) {
 					&& array_key_exists( 'ads_to_render', $ads_info )
 					&& in_array( $wp_query->current_post, (array) $ads_info['random_numbers'], true )
 				) {
-					echo '<article class="blogsy-banner-item">';
-					blogsy_random_post_archive_advertisement_part(
-						is_array( $ads_info['ads_to_render'] ) ? $ads_info['ads_to_render'][ $count ] : $ads_info['ads_to_render']
-					);
-					echo '</article>';
-					++$count;
+					$ad_to_render = is_array( $ads_info['ads_to_render'] )
+						? ( $ads_info['ads_to_render'][ $count ] ?? null )
+						: $ads_info['ads_to_render'];
+
+					if ( null !== $ad_to_render ) {
+						echo '<article class="blogsy-banner-item">';
+						blogsy_random_post_archive_advertisement_part( absint( $ad_to_render ) );
+						echo '</article>';
+						++$count;
+					}
 				}
 
 				get_template_part( 'template-parts/post/content/content', $blog_layout );
