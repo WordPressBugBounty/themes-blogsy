@@ -545,6 +545,11 @@ function blogsy_no_sanitize( $val ) {
 function blogsy_sanitize_order( string $input ): string {
 
 	$json = json_decode( $input, true );
+
+	if ( ! is_array( $json ) ) {
+		return '';
+	}
+
 	foreach ( $json as $section => $priority ) {
 		if ( ! is_string( $section ) || ! is_int( $priority ) ) {
 			return false;
@@ -1004,9 +1009,9 @@ function blogsy_repeater_sanitize( string $input, WP_Customize_Setting $setting 
 						break;
 					case 'select':
 						$data[ $i ][ $id ] = '';
-						$is_select2  = ! empty( $fields[ $id ]['is_select2'] );
-						$data_source = ! empty( $fields[ $id ]['data_source'] ) ? $fields[ $id ]['data_source'] : false;
-						$data_source_name = ! empty( $fields[ $id ]['data_source_name'] ) ? $fields[ $id ]['data_source_name'] : null;
+						$is_select2        = ! empty( $fields[ $id ]['is_select2'] );
+						$data_source       = ! empty( $fields[ $id ]['data_source'] ) ? $fields[ $id ]['data_source'] : false;
+						$data_source_name  = ! empty( $fields[ $id ]['data_source_name'] ) ? $fields[ $id ]['data_source_name'] : null;
 
 						if ( $is_select2 && $data_source ) {
 							$multiple = ! empty( $fields[ $id ]['multiple'] );
@@ -1017,7 +1022,7 @@ function blogsy_repeater_sanitize( string $input, WP_Customize_Setting $setting 
 									if ( ! empty( $value ) ) {
 										$valid_ids = blogsy_sanitize_select2_valid_ids( $value, $data_source, $data_source_name );
 										if ( ! empty( $valid_ids ) ) {
-											$valid_ids = array_map( 'strval', $valid_ids );
+											$valid_ids         = array_map( 'strval', $valid_ids );
 											$data[ $i ][ $id ] = array_values( array_intersect( $value, $valid_ids ) );
 										}
 									}

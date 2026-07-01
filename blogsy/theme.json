@@ -87,6 +87,9 @@
 			}
 		},
 		"blocks": {
+			 "core/group": {
+				"css": "&[style*=\"border-color\"]{border-width:0}"
+			},
 			"core/latest-posts": {
 				"elements": {
 					"link": {

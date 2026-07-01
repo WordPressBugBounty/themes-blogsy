@@ -185,9 +185,15 @@ if ( ! class_exists( 'Admin' ) ) :
 		 * @param string $text Text that we're going to replace.
 		 * @since 1.0.0
 		 */
-		public function filter_update_footer( string $text ) {
+		public function filter_update_footer( $text = '' ): string {
 
-			$base = get_current_screen()->base;
+			$screen = get_current_screen();
+
+			if ( ! $screen ) {
+				return (string) $text;
+			}
+
+			$base = $screen->base;
 
 			/**
 			 * Only do this if we are on one of our plugin pages.
@@ -195,7 +201,7 @@ if ( ! class_exists( 'Admin' ) ) :
 			if ( blogsy_is_admin_page( $base ) ) {
 				return apply_filters( 'blogsy_footer_version', esc_html__( 'Blogsy Theme', 'blogsy' ) . ' ' . BLOGSY_THEME_VERSION . '<br/><a href="' . esc_url( 'https://twitter.com/peregrine-themes' ) . '" target="_blank" rel="noopener noreferrer"><span class="dashicons dashicons-twitter"></span></a><a href="' . esc_url( 'https://www.facebook.com/peregrinethemes/' ) . '" target="_blank" rel="noopener noreferrer"><span class="dashicons dashicons-facebook"></span></a>' );
 			} else {
-				return $text;
+				return (string) $text;
 			}
 		}
 
