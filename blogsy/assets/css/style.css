@@ -7890,6 +7890,14 @@ img.blogsy-logo-image.dark-logo {
     border-radius: inherit;
 }
 
+.blogsy-stories.blogsy-post-nexo-widget .post-wrapper .item-link {
+	z-index: 99;
+}
+
+.stories-popup .item-link.blogsy-position-cover {
+    z-index: 11;
+}
+
 .blogsy-post-nexo-widget .post-wrapper .image-wrapper {
     overflow: hidden;
     display: flex;

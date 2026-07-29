@@ -512,6 +512,7 @@ function blogsy_stories_ajax_call() {
 								?>
 								<div class="stories-popup__slide post-item swiper-slide<?php echo ! $has_thumb ? ' no-thumb' : ''; ?>">
 									<article class="post-wrapper">
+										<a class="item-link blogsy-position-cover" aria-label="<?php esc_attr_e( 'Read More', 'blogsy' ); ?>" href="<?php echo esc_url( get_the_permalink() ); ?>"></a>
 										<?php if ( $has_thumb ) : ?>
 										<div class="image-wrapper">
 											<?php the_post_thumbnail( 'full' ); ?>
@@ -525,7 +526,7 @@ function blogsy_stories_ajax_call() {
 												</div>
 												<?php endif; ?>
 												<?php if ( ! empty( $stories_elements['title'] ) ) : ?>
-													<?php the_title( '<h4 class="title"><a href="' . esc_url( get_the_permalink() ) . '" class="title-animation-underline">', '</a></h4>' ); ?>
+													<h4 class="title"><?php the_title(); ?></h4>
 												<?php endif; ?>
 												<?php if ( ! empty( $stories_elements['meta'] ) ) : ?>
 													<div class="meta-wrapper">

@@ -878,7 +878,7 @@ function blogsy_get_pyml_data(): ?array {
 				'spaceBetween'   => 25,
 				'centeredSlides' => true,
 				'effect'         => 'slide',
-				'autoHeight'     => true,
+				'autoHeight'     => false,
 				'direction'      => 'horizontal',
 				'breakpoints'    => [
 					'0'    => [

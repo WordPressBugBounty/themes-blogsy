@@ -631,6 +631,15 @@ html .editor-styles-wrapper .card-layout-w.e-con {
     }
 }
 
+html .editor-styles-wrapper .wp-block-latest-posts a,
+html .editor-styles-wrapper .wp-block-latest-posts a img {
+    height: 100%;
+}
+
+html .editor-styles-wrapper .wp-block-latest-posts a img {
+    display: block;
+}
+
 /* SVG Icons */
 
 html .editor-styles-wrapper .blogsy-svg-icon {

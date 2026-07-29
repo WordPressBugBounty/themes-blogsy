@@ -12,7 +12,7 @@
 ?>
 
 <!-- wp:columns {"metadata":{"name":"Author widget"},"style":{"spacing":{"blockGap":{"left":"0px"},"margin":{"top":"0px","bottom":"0px"}}}} -->
-<div class="wp-block-columns" style="margin-top:0px;margin-bottom:0px"><!-- wp:column -->
+<div class="wp-block-columns" style="margin-top:0px;margin-bottom:0px"><!-- wp:column {"metadata":{"blockVisibility":{"viewport":{"tablet":false,"mobile":false}}}} -->
 <div class="wp-block-column"><!-- wp:spacer -->
 <div style="height:100px" aria-hidden="true" class="wp-block-spacer"></div>
 <!-- /wp:spacer --></div>
@@ -108,7 +108,7 @@
 <!-- /wp:group --></div>
 <!-- /wp:column -->
 
-<!-- wp:column -->
+<!-- wp:column {"metadata":{"blockVisibility":{"viewport":{"tablet":false,"mobile":false}}}} -->
 <div class="wp-block-column"><!-- wp:spacer -->
 <div style="height:100px" aria-hidden="true" class="wp-block-spacer"></div>
 <!-- /wp:spacer --></div>

@@ -780,13 +780,12 @@
 		countClick: function () {
 			this.container.on('click', '.stories-popup__slide .story-count', function (event) {
 				event.stopPropagation();
-				event.preventDefault();
 			});
 		},
 
 		storyClick: function () {
 			let self = this;
-			this.container.on('click', '.stories-popup__slide', function (e) {
+			this.container.on('click', '.blogsy-stories-box .stories-popup__slide', function (e) {
 				e.preventDefault();
 
 				let _this = $(this),

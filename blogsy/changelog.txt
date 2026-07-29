@@ -1,4 +1,8 @@
-﻿= 1.0.19 - 30 June 2026 =
+﻿= 1.0.20 - 29 July 2026 =
+* Fixed: Stories are not clickable in popup modal.
+* Fixed: Pattern issue in mobile scree.
+
+= 1.0.19 - 30 June 2026 =
 * Fixed: Fatal TypeError on the Updates (update-core.php) screen under PHP 8 when the `update_footer` filter passes a null value.
 * Fixed Border issue in Blogsy patterns.
 
