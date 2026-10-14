@@ -1,4 +1,7 @@
-﻿= 1.0.20 - 29 July 2026 =
+﻿= 1.0.21 - 14 Oct 2026 =
+* Fixed: Mobile offcanvas popup issue.
+
+= 1.0.20 - 29 July 2026 =
 * Fixed: Stories are not clickable in popup modal.
 * Fixed: Pattern issue in mobile scree.
 

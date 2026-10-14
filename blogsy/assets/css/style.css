@@ -5093,6 +5093,10 @@ body.admin-bar #site-sticky-header {
     visibility: visible;
 }
 
+html:has(.offcanvas-wrapper.open) {
+    overflow: hidden;
+}
+
 .offcanvas-wrapper .offcanvas-container {
     position: fixed;
     top: 0;
@@ -5116,6 +5120,13 @@ body.admin-bar .offcanvas-wrapper .offcanvas-container {
     body.admin-bar .offcanvas-wrapper .offcanvas-container {
         top: 45px;
         height: calc(100vh - 45px);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    body.admin-bar .pt-header-sticky .offcanvas-wrapper .offcanvas-container {
+        height:calc(100vh - 0px);
+        top: 0
     }
 }
 
@@ -8576,6 +8587,7 @@ img.blogsy-logo-image.dark-logo {
 }
 
 @media (max-width: 1024px) {
+    #blogsy-hero,
     #blogsy-hero .pt-hero-slider {
         overflow: hidden;
     }

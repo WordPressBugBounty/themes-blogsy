@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<div class="pt-header-sticky">
+<div class="pt-header pt-header-sticky">
 	<div class="pt-header-inner">
 		<div class="pt-container pt-header-container">
 			<?php blogsy_header_logo_template(); ?>
