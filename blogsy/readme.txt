@@ -6,7 +6,7 @@ Tested up to: 7.1
 Requires PHP: 7.4
 License: GNU General Public License v2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.21
+Stable tag: 1.0.22
 
 A lightweight and highly customizable multi-purpose theme that makes it easy for anyone to create their perfect website.
 
@@ -27,6 +27,13 @@ Blogsy WordPress Theme, Copyright (c) 2025, Peregrinethemes
 Blogsy is distributed under the terms of the GNU GPLs
 
 == Changelog ==
+
+= 1.0.22 - 13 Nov 2026 =
+* Fixed: Mobile menu could not scroll to the bottom items when submenus were expanded.
+* Fixed: Horizontal overflow on small screens (archive grid, left/right aligned images, long words).
+* Fixed: Header logo, widgets and menu toggle wrapping onto separate rows on small phones.
+* Fixed: Empty footer widget area and copyright top border shown to visitors when no footer widgets are assigned.
+* Fixed: WordPress social icon flagged by Theme Check.
 
 = 1.0.21 - 14 Oct 2026 =
 * Fixed: Mobile offcanvas popup issue.

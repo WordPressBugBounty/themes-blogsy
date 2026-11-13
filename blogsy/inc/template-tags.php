@@ -520,48 +520,69 @@ if ( ! function_exists( 'blogsy_footer_widgets' ) ) :
 		$footer_layout  = Helper::get_option( 'footer_layout' );
 		$column_classes = blogsy_get_footer_column_class( $footer_layout );
 		$divider_style  = Helper::get_option( 'divider_style' );
+
+		if ( ! is_array( $column_classes ) || [] === $column_classes ) {
+			return;
+		}
+
+		$can_edit = current_user_can( 'edit_theme_options' );
+
+		$has_any_widget = false;
+		foreach ( array_keys( $column_classes ) as $i ) {
+			if ( is_active_sidebar( 'blogsy-footer-' . ( $i + 1 ) ) ) {
+				$has_any_widget = true;
+				break;
+			}
+		}
+
+		if ( ! $has_any_widget && ! $can_edit ) {
+			return;
+		}
 		?>
 		<div id="blogsy-footer-widgets" class="pt-row default-footer-main">
 			<?php
-			if ( is_array( $column_classes ) && [] !== $column_classes ) {
-				foreach ( $column_classes as $i => $column_class ) {
-					$sidebar_id = 'blogsy-footer-' . ( $i + 1 );
-					?>
-					<div class="blogsy-footer-column <?php echo esc_attr( $column_class ); ?>">
-						<?php
-						if ( is_active_sidebar( $sidebar_id ) ) {
-							dynamic_sidebar( $sidebar_id );
-						} elseif ( current_user_can( 'edit_theme_options' ) ) {
-							$sidebar_name = blogsy_get_sidebar_name_by_id( $sidebar_id );
-							?>
-							<div class="widget_block blogsy-no-widget">
-								<div class="blogsy-divider-heading divider-style-<?php echo esc_attr( $divider_style ); ?>">
-									<div class="divider divider-1"></div>
-									<div class="divider divider-2"></div>
-									<h4 class="title">
-										<span class="title-inner">
-											<span class="title-text"><?php echo esc_html( $sidebar_name ); ?></span>
-										</span>
-									</h4>
-									<div class="divider divider-3"></div>
-									<div class="divider divider-4"></div>
-								</div>
-								<p class='no-widget-text'>
-									<?php if ( is_customize_preview() ) { ?>
-										<a href='#' class="blogsy-set-widget" data-sidebar-id="<?php echo esc_attr( $sidebar_id ); ?>">
-									<?php } else { ?>
-										<a href='<?php echo esc_url( admin_url( 'widgets.php' ) ); ?>'>
-									<?php } ?>
-										<?php esc_html_e( 'Click here to assign a widget.', 'blogsy' ); ?>
-									</a>
-								</p>
-							</div>
-							<?php
-						}
-						?>
-					</div>
-					<?php
+			foreach ( $column_classes as $i => $column_class ) {
+				$sidebar_id = 'blogsy-footer-' . ( $i + 1 );
+				$is_active  = is_active_sidebar( $sidebar_id );
+
+				if ( ! $is_active && ! $can_edit ) {
+					continue;
 				}
+				?>
+				<div class="blogsy-footer-column <?php echo esc_attr( $column_class ); ?>">
+					<?php
+					if ( $is_active ) {
+						dynamic_sidebar( $sidebar_id );
+					} else {
+						$sidebar_name = blogsy_get_sidebar_name_by_id( $sidebar_id );
+						?>
+						<div class="widget_block blogsy-no-widget">
+							<div class="blogsy-divider-heading divider-style-<?php echo esc_attr( $divider_style ); ?>">
+								<div class="divider divider-1"></div>
+								<div class="divider divider-2"></div>
+								<h4 class="title">
+									<span class="title-inner">
+										<span class="title-text"><?php echo esc_html( $sidebar_name ); ?></span>
+									</span>
+								</h4>
+								<div class="divider divider-3"></div>
+								<div class="divider divider-4"></div>
+							</div>
+							<p class="no-widget-text">
+								<?php if ( is_customize_preview() ) { ?>
+									<a href="#" class="blogsy-set-widget" data-sidebar-id="<?php echo esc_attr( $sidebar_id ); ?>">
+								<?php } else { ?>
+									<a href="<?php echo esc_url( admin_url( 'widgets.php' ) ); ?>">
+								<?php } ?>
+									<?php esc_html_e( 'Click here to assign a widget.', 'blogsy' ); ?>
+								</a>
+							</p>
+						</div>
+						<?php
+					}
+					?>
+				</div>
+				<?php
 			}
 			?>
 		</div>

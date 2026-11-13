@@ -1,4 +1,11 @@
-﻿= 1.0.21 - 14 Oct 2026 =
+﻿= 1.0.22 - 13 Nov 2026 =
+* Fixed: Mobile menu could not scroll to the bottom items when submenus were expanded.
+* Fixed: Horizontal overflow on small screens (archive grid, left/right aligned images, long words).
+* Fixed: Header logo, widgets and menu toggle wrapping onto separate rows on small phones.
+* Fixed: Empty footer widget area and copyright top border shown to visitors when no footer widgets are assigned.
+* Fixed: WordPress social icon flagged by Theme Check.
+
+= 1.0.21 - 14 Oct 2026 =
 * Fixed: Mobile offcanvas popup issue.
 
 = 1.0.20 - 29 July 2026 =
